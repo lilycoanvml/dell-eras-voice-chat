@@ -93,31 +93,43 @@ const ERA_TRAITS: Record<string, string[]> = {
 const PROTS: [string, string, string] = ['-2deg', '1.8deg', '-1.1deg'];
 
 // ─── TTS ─────────────────────────────────────────────────────────────────────
-// Voice priority: Chrome's Google neural voices first (noticeably better than OS defaults),
-// then macOS Australian/UK accents which tend to sound less robotic than US Samantha.
+// Chrome loads Google voices asynchronously — cache them once they're ready
+// so speak() always finds the good voices instead of falling back to robotic defaults.
+let voiceCache: SpeechSynthesisVoice[] = [];
+
+function primeVoices() {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+  const load = () => { voiceCache = window.speechSynthesis.getVoices(); };
+  load();
+  window.speechSynthesis.addEventListener('voiceschanged', load);
+}
+
+function pickVoice(voices: SpeechSynthesisVoice[]) {
+  return (
+    voices.find(v => v.name === 'Google UK English Female') ||
+    voices.find(v => v.name === 'Google US English')        ||
+    voices.find(v => v.name === 'Karen')                    ||
+    voices.find(v => v.name === 'Veena')                    ||
+    voices.find(v => v.name === 'Samantha')                 ||
+    voices.find(v => v.name.includes('Aria'))               ||
+    voices.find(v => v.lang === 'en-GB' && !v.name.toLowerCase().includes('male')) ||
+    voices.find(v => v.lang.startsWith('en') && !v.name.toLowerCase().includes('male'))
+  );
+}
+
 function speak(text: string) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
+
   const utterance = new SpeechSynthesisUtterance(text);
-  // Peppy but not frantic — slightly higher pitch lifts the energy considerably.
-  utterance.rate  = 1.02;
-  utterance.pitch = 1.28;
+  utterance.rate   = 1.02;
+  utterance.pitch  = 1.28;
   utterance.volume = 1;
 
-  const voices = window.speechSynthesis.getVoices();
-
-  // Sorted by how "natural and fun" each sounds in practice.
-  const preferred =
-    voices.find(v => v.name === 'Google UK English Female') || // Chrome: best free neural voice
-    voices.find(v => v.name === 'Google US English')          || // Chrome: solid fallback
-    voices.find(v => v.name === 'Karen')                       || // macOS: Australian — warm & bright
-    voices.find(v => v.name === 'Veena')                       || // macOS: Indian-English — distinctively fun
-    voices.find(v => v.name === 'Samantha')                    || // macOS: standard US female
-    voices.find(v => v.name.includes('Aria'))                  || // Windows Neural
-    voices.find(v => v.lang === 'en-GB' && !v.name.toLowerCase().includes('male')) ||
-    voices.find(v => v.lang.startsWith('en') && !v.name.toLowerCase().includes('male'));
-
+  const voices = voiceCache.length > 0 ? voiceCache : window.speechSynthesis.getVoices();
+  const preferred = pickVoice(voices);
   if (preferred) utterance.voice = preferred;
+
   window.speechSynthesis.speak(utterance);
 }
 
@@ -739,6 +751,7 @@ export default function EraApp() {
   useEffect(() => {
     const saved = localStorage.getItem('era-mood') || 'sage';
     setMood(saved);
+    primeVoices(); // load Google voices before Ali speaks for the first time
   }, []);
 
   useEffect(() => {
