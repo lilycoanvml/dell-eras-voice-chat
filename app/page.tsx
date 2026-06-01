@@ -93,20 +93,30 @@ const ERA_TRAITS: Record<string, string[]> = {
 const PROTS: [string, string, string] = ['-2deg', '1.8deg', '-1.1deg'];
 
 // ─── TTS ─────────────────────────────────────────────────────────────────────
+// Voice priority: Chrome's Google neural voices first (noticeably better than OS defaults),
+// then macOS Australian/UK accents which tend to sound less robotic than US Samantha.
 function speak(text: string) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
   const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate = 0.88;
-  utterance.pitch = 1.05;
+  // Peppy but not frantic — slightly higher pitch lifts the energy considerably.
+  utterance.rate  = 1.02;
+  utterance.pitch = 1.28;
+  utterance.volume = 1;
+
   const voices = window.speechSynthesis.getVoices();
-  const preferred = voices.find(v =>
-    v.name === 'Samantha' ||
-    v.name === 'Karen' ||
-    v.name === 'Google UK English Female' ||
-    v.name.includes('Aria') ||
-    (v.lang.startsWith('en') && v.name.toLowerCase().includes('female'))
-  );
+
+  // Sorted by how "natural and fun" each sounds in practice.
+  const preferred =
+    voices.find(v => v.name === 'Google UK English Female') || // Chrome: best free neural voice
+    voices.find(v => v.name === 'Google US English')          || // Chrome: solid fallback
+    voices.find(v => v.name === 'Karen')                       || // macOS: Australian — warm & bright
+    voices.find(v => v.name === 'Veena')                       || // macOS: Indian-English — distinctively fun
+    voices.find(v => v.name === 'Samantha')                    || // macOS: standard US female
+    voices.find(v => v.name.includes('Aria'))                  || // Windows Neural
+    voices.find(v => v.lang === 'en-GB' && !v.name.toLowerCase().includes('male')) ||
+    voices.find(v => v.lang.startsWith('en') && !v.name.toLowerCase().includes('male'));
+
   if (preferred) utterance.voice = preferred;
   window.speechSynthesis.speak(utterance);
 }
