@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "workflows": [
+    {
+      "id": "standard-discovery",
+      "name": "Standard 5-Question Discovery",
+      "description": "The default flow: 5 questions, era reveal, product recommendations",
+      "steps": [
+        { "step": 1, "agent": "conversational", "action": "open_greeting_and_q1" },
+        { "step": 2, "agent": "conversational", "action": "reflect_and_q2" },
+        { "step": 3, "agent": "conversational", "action": "reflect_and_q3" },
+        { "step": 4, "agent": "conversational", "action": "reflect_and_q4" },
+        { "step": 5, "agent": "conversational", "action": "signal_final_and_q5" },
+        { "step": 6, "agents": ["personality-era", "recommendation", "blackfriday-deal"], "action": "parallel_era_reveal", "parallel": true }
+      ],
+      "estimatedTurns": 11,
+      "estimatedDurationSeconds": 180
+    },
+    {
+      "id": "short-answer-recovery",
+      "name": "Short Answer Recovery",
+      "description": "Triggered when user gives < 5 word answers. Probes deeper before advancing.",
+      "steps": [
+        { "step": 1, "agent": "conversational", "action": "probe_deeper" },
+        { "step": 2, "condition": "answer_sufficient", "agent": "conversational", "action": "advance_question" }
+      ]
+    },
+    {
+      "id": "price-deflection",
+      "name": "Price Question During Discovery",
+      "description": "User asks about price before era reveal. Warmly redirect.",
+      "steps": [
+        { "step": 1, "agent": "conversational", "action": "deflect_price_question" },
+        { "step": 2, "agent": "conversational", "action": "continue_discovery" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "version": "1.0.0",
+  "eraBundles": [
+    {
+      "eraId": "creator",
+      "bundleName": "The Creator Studio Bundle",
+      "tagline": "Everything your studio needs.",
+      "products": ["xps-16-9640", "ultrasharp-27-4k", "dell-canvas-27"],
+      "individualTotal": 3547,
+      "bundlePrice": 3299,
+      "bundleSavings": 248,
+      "totalSavingsWithBF": 1398
+    },
+    {
+      "eraId": "innovator",
+      "bundleName": "The Builder Stack",
+      "tagline": "Ship faster. Think bigger.",
+      "products": ["xps-15-9530", "ultrasharp-32-4k-usbc", "thunderbolt-dock-wd22tb4"],
+      "individualTotal": 2547,
+      "bundlePrice": 2349,
+      "bundleSavings": 198,
+      "totalSavingsWithBF": 1198
+    },
+    {
+      "eraId": "achiever",
+      "bundleName": "The Executive Setup",
+      "tagline": "Command from anywhere.",
+      "products": ["latitude-9550", "dell-40-curved", "thunderbolt-dock-wd22tb4"],
+      "individualTotal": 3147,
+      "bundlePrice": 2849,
+      "bundleSavings": 298,
+      "totalSavingsWithBF": 1248
+    },
+    {
+      "eraId": "explorer",
+      "bundleName": "The Go-Anywhere Kit",
+      "tagline": "Pack light. Work everywhere.",
+      "products": ["xps-13-9340", "pro-wireless-headset-wl5022", "power-companion-pw7018lc"],
+      "individualTotal": 1377,
+      "bundlePrice": 1249,
+      "bundleSavings": 128,
+      "totalSavingsWithBF": 558
+    },
+    {
+      "eraId": "visionary",
+      "bundleName": "The Founder Desk",
+      "tagline": "The setup for ideas at scale.",
+      "products": ["xps-16-9640", "dell-40-curved", "premier-wireless-km7321w"],
+      "individualTotal": 3047,
+      "bundlePrice": 2799,
+      "bundleSavings": 248,
+      "totalSavingsWithBF": 1148
+    },
+    {
+      "eraId": "performer",
+      "bundleName": "The Performance Rig",
+      "tagline": "No compromises. No mercy.",
+      "products": ["alienware-m18-r2", "alienware-34-qd-oled", "alienware-pro-mouse-aw920m"],
+      "individualTotal": 3447,
+      "bundlePrice": 3149,
+      "bundleSavings": 298,
+      "totalSavingsWithBF": 1438
+    }
+  ]
+}

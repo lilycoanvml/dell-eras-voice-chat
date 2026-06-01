@@ -1,0 +1,25 @@
+{
+  "version": "1.0.0",
+  "eraRevealSequence": [
+    { "step": 1, "element": "overlay_fade", "duration": 200, "delay": 0, "easing": "ease-out" },
+    { "step": 2, "element": "era_card", "duration": 1200, "delay": 300, "easing": "cubic-bezier(0.16, 1, 0.3, 1)", "properties": ["opacity", "scale", "blur"] },
+    { "step": 3, "element": "era_name", "duration": 800, "delay": 600, "easing": "ease-out", "properties": ["opacity", "translateY"] },
+    { "step": 4, "element": "era_tagline", "duration": 600, "delay": 900, "easing": "ease-out" },
+    { "step": 5, "element": "era_description", "duration": 500, "delay": 1100, "easing": "ease-out" },
+    { "step": 6, "element": "products_header", "duration": 400, "delay": 2200, "easing": "ease-out" },
+    { "step": 7, "element": "product_card_1", "duration": 500, "delay": 2350, "easing": "ease-out" },
+    { "step": 8, "element": "product_card_2", "duration": 500, "delay": 2500, "easing": "ease-out" },
+    { "step": 9, "element": "product_card_3", "duration": 500, "delay": 2650, "easing": "ease-out" }
+  ],
+  "messageEntrance": {
+    "duration": 400,
+    "delay": 50,
+    "easing": "ease-out",
+    "properties": ["opacity", "translateY"]
+  },
+  "typingIndicator": {
+    "dotCount": 3,
+    "dotAnimationDuration": 1400,
+    "dotStagger": 200
+  }
+}

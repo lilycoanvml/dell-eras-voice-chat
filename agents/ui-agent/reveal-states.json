@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "states": [
+    {
+      "id": "pre_reveal",
+      "label": "Pre-reveal",
+      "description": "Chat is still active, discovery questions in progress",
+      "uiState": { "showInput": true, "showProgress": true, "showEraCard": false, "showProducts": false }
+    },
+    {
+      "id": "reveal_animating",
+      "label": "Era revealing",
+      "description": "Era card is animating in",
+      "uiState": { "showInput": false, "showProgress": false, "showEraCard": true, "showProducts": false }
+    },
+    {
+      "id": "products_revealing",
+      "label": "Products revealing",
+      "description": "Product cards staggering in below era card",
+      "uiState": { "showInput": false, "showProgress": false, "showEraCard": true, "showProducts": true }
+    },
+    {
+      "id": "complete",
+      "label": "Complete",
+      "description": "Full reveal shown, CTA visible",
+      "uiState": { "showInput": false, "showProgress": false, "showEraCard": true, "showProducts": true, "showCTA": true }
+    },
+    {
+      "id": "error",
+      "label": "Error",
+      "description": "Something went wrong",
+      "uiState": { "showInput": false, "showProgress": false, "showEraCard": false, "showProducts": false, "showError": true }
+    }
+  ]
+}

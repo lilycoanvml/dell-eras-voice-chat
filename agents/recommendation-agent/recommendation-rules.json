@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "selectionRules": [
+    {
+      "rule": "always-include-hero",
+      "description": "Always include the era's flagship laptop as the first product",
+      "priority": 1,
+      "override": false
+    },
+    {
+      "rule": "second-product-display",
+      "description": "Second product should be a monitor or display when possible",
+      "priority": 2,
+      "override": true
+    },
+    {
+      "rule": "max-one-accessory",
+      "description": "No more than one accessory (headset, mouse, keyboard) in a 3-product set",
+      "priority": 3
+    },
+    {
+      "rule": "portability-signal",
+      "description": "If user mentions travel/portability, prefer XPS 13 over larger laptops",
+      "signal": ["travel", "portable", "light", "anywhere", "nomad"],
+      "preferredProduct": "xps-13-9340",
+      "priority": 4
+    },
+    {
+      "rule": "performance-signal",
+      "description": "If user mentions rendering, compiling, or speed, prefer Precision or higher-spec laptop",
+      "signal": ["render", "compile", "fast", "performance", "workstation"],
+      "preferredProduct": "precision-5690",
+      "priority": 4
+    },
+    {
+      "rule": "savings-order",
+      "description": "Within same score tier, sort by savings amount descending (anchor on value)",
+      "priority": 5
+    }
+  ]
+}

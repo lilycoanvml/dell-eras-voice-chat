@@ -1,0 +1,47 @@
+{
+  "version": "1.0.0",
+  "rules": [
+    {
+      "id": "rule-01",
+      "name": "Short answer probe",
+      "condition": "userMessageWordCount < 5 AND questionIndex < 5",
+      "action": "probe_deeper",
+      "agent": "conversational",
+      "priority": 1
+    },
+    {
+      "id": "rule-02",
+      "name": "Price question deflection",
+      "condition": "userMessageContains(['price', 'cost', 'how much', 'afford', 'budget'])",
+      "action": "deflect_to_discovery",
+      "agent": "conversational",
+      "deflectMessage": "Let's figure out where you're headed first — then I'll show you exactly what's on offer.",
+      "priority": 2
+    },
+    {
+      "id": "rule-03",
+      "name": "Era reveal trigger",
+      "condition": "questionIndex >= 5",
+      "action": "era_reveal",
+      "agents": ["personality-era", "recommendation", "blackfriday-deal"],
+      "parallel": true,
+      "priority": 3
+    },
+    {
+      "id": "rule-04",
+      "name": "Off-topic recovery",
+      "condition": "userMessageContains(['who are you', 'what is this', 'taylor swift', 'help', 'confused'])",
+      "action": "context_recovery",
+      "agent": "conversational",
+      "priority": 4
+    },
+    {
+      "id": "rule-05",
+      "name": "Standard discovery",
+      "condition": "questionIndex < 5",
+      "action": "continue_discovery",
+      "agent": "conversational",
+      "priority": 10
+    }
+  ]
+}

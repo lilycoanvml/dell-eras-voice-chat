@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Next Era Event — Dell Technologies</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,700;1,9..144,300;1,9..144,400&family=Caveat:wght@400;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── CSS VARIABLES ── */
+    :root {
+      --bg:          #cdd8c0;
+      --card:        #f3f0e4;
+      --ink:         #2f3a28;
+      --ink-soft:    #5a6b52;
+      --accent:      #5a7a3f;
+      --accent-light:rgba(90,122,63,0.12);
+      --dell:        #0672cb;
+      --sticky-1:    #e8d98a;
+      --sticky-2:    #c9b89a;
+      --sticky-3:    #d4836a;
+      --divider:     rgba(47,58,40,0.14);
+      --shadow:      rgba(47,58,40,0.12);
+    }
+    [data-mood="sand"] {
+      --bg:          #e8e0d0;
+      --card:        #f7f3ea;
+      --ink:         #33291f;
+      --ink-soft:    #6b5a48;
+      --accent:      #c07a3e;
+      --accent-light:rgba(192,122,62,0.12);
+      --divider:     rgba(51,41,31,0.14);
+      --shadow:      rgba(51,41,31,0.12);
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      width: 100%; height: 100%;
+      font-family: 'Fraunces', Georgia, serif;
+      background: var(--bg);
+      color: var(--ink);
+      transition: background 0.4s ease, color 0.4s ease;
+      overflow: hidden;
+    }
+
+    /* ── APP SHELL ── */
+    #app {
+      display: flex;
+      flex-direction: column;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* ── METADATA BAR ── */
+    #meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 11px 44px;
+      border-bottom: 1px solid var(--divider);
+      flex-shrink: 0;
+      z-index: 10;
+    }
+    .meta-left { display: flex; align-items: center; gap: 18px; }
+    .brand-lockup {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+    .brand-lockup strong { color: var(--dell); }
+    .divider-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--divider); }
+    .event-name {
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+    }
+    .meta-right { display: flex; align-items: center; gap: 14px; }
+    #q-counter {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      min-width: 110px;
+      text-align: right;
+    }
+    #mood-toggle {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      border: 1px solid var(--divider);
+      background: transparent;
+      padding: 5px 11px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    #mood-toggle:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    .mood-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      transition: background 0.3s;
+    }
+
+    /* ── PROGRESS TRACK ── */
+    #progress-track {
+      height: 2px;
+      background: var(--divider);
+      flex-shrink: 0;
+    }
+    #progress-fill {
+      height: 100%;
+      background: var(--accent);
+      transition: width 0.55s cubic-bezier(0.4,0,0.2,1);
+      width: 0%;
+    }
+
+    /* ── CONTENT AREA ── */
+    #content-area {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ── QUIZ VIEW ── */
+    #quiz-view {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: opacity 0.25s ease;
+    }
+
+    /* ── QUESTION ZONE (left 42%) ── */
+    #question-zone {
+      width: 42%;
+      flex-shrink: 0;
+      padding: 44px 40px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border-right: 1px solid var(--divider);
+    }
+    .q-top { flex: 1; }
+    .q-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 26px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .q-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--divider);
+    }
+    .q-text {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(24px, 2.8vw, 38px);
+      font-weight: 300;
+      line-height: 1.22;
+      color: var(--ink);
+      letter-spacing: -0.015em;
+      margin-bottom: 14px;
+    }
+    .q-text em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .q-sub {
+      font-family: 'Fraunces', serif;
+      font-size: 13.5px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink-soft);
+      opacity: 0.75;
+    }
+    .q-bottom { padding-top: 20px; }
+    .nav-hint {
+      font-family: 'Caveat', cursive;
+      font-size: 15px;
+      color: var(--ink-soft);
+      opacity: 0.55;
+    }
+
+    /* ── ANSWER ZONE (right 58%) ── */
+    #answer-zone {
+      flex: 1;
+      padding: 36px 48px 28px 40px;
+      display: flex;
+      align-items: center;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 14px;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── ANSWER CARD ── */
+    @keyframes cardIn {
+      from {
+        opacity: 0;
+        transform: rotate(var(--rot,0deg)) translateY(22px) scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: rotate(var(--rot,0deg)) translateY(0) scale(1);
+      }
+    }
+    .answer-card {
+      background: var(--card);
+      border: 1.5px solid transparent;
+      border-radius: 5px;
+      padding: 22px 22px 18px;
+      cursor: pointer;
+      position: relative;
+      transform: rotate(var(--rot,0deg));
+      transition:
+        transform 0.28s cubic-bezier(0.34,1.56,0.64,1),
+        border-color 0.18s,
+        background 0.18s,
+        box-shadow 0.22s;
+      box-shadow: 2px 4px 14px var(--shadow);
+      animation: cardIn 0.48s cubic-bezier(0.34,1.56,0.64,1) both;
+      overflow: hidden;
+    }
+    .answer-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.18s;
+    }
+    .answer-card:nth-child(1) { --rot: -1.3deg; animation-delay: 0.04s; }
+    .answer-card:nth-child(2) { --rot:  0.9deg; animation-delay: 0.11s; }
+    .answer-card:nth-child(3) { --rot:  0.5deg; animation-delay: 0.18s; }
+    .answer-card:nth-child(4) { --rot: -0.8deg; animation-delay: 0.25s; }
+    .answer-card:hover {
+      transform: rotate(0deg) translateY(-6px);
+      border-color: var(--accent);
+      box-shadow: 4px 10px 28px var(--shadow);
+    }
+    .answer-card.selected {
+      border-color: var(--accent);
+      background: var(--accent-light);
+      transform: rotate(0deg) translateY(-4px);
+      box-shadow: 4px 10px 28px var(--shadow);
+    }
+    .answer-card.selected::after { background: var(--accent); }
+    .answer-card.selected .card-check {
+      opacity: 1;
+      transform: scale(1) rotate(-6deg);
+    }
+    .card-letter {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      opacity: 0.55;
+      margin-bottom: 9px;
+    }
+    .card-text {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(13px, 1.35vw, 17px);
+      font-weight: 400;
+      line-height: 1.45;
+      color: var(--ink);
+    }
+    .card-text em { font-style: italic; color: var(--accent); }
+    .card-check {
+      position: absolute;
+      top: 12px; right: 14px;
+      font-family: 'Caveat', cursive;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+      opacity: 0;
+      transform: scale(0.4) rotate(-6deg);
+      transition: opacity 0.2s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    /* ── RESULT SCREEN ── */
+    #result-screen {
+      display: none;
+      width: 100%;
+      height: 100%;
+    }
+    #result-screen.visible {
+      display: flex;
+    }
+    #result-left {
+      width: 42%;
+      flex-shrink: 0;
+      padding: 44px 40px 28px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-right: 1px solid var(--divider);
+    }
+    .r-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .r-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--divider);
+    }
+
+    @keyframes eraNameIn {
+      from { filter: blur(18px); opacity: 0; transform: scale(0.88); }
+      to   { filter: blur(0);    opacity: 1; transform: scale(1); }
+    }
+    #r-era-name {
+      font-family: 'Caveat', cursive;
+      font-size: clamp(52px, 6.5vw, 88px);
+      font-weight: 700;
+      line-height: 0.95;
+      color: var(--era-primary, var(--accent));
+      margin-bottom: 16px;
+      letter-spacing: -0.01em;
+      animation: eraNameIn 0.85s cubic-bezier(0.4,0,0.2,1) both 0.1s;
+    }
+    #r-tagline {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(15px, 1.7vw, 21px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--ink);
+      line-height: 1.35;
+      margin-bottom: 18px;
+    }
+    #r-description {
+      font-family: 'Fraunces', serif;
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      margin-bottom: 28px;
+    }
+    .r-shop-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dell);
+      border-top: 1px solid var(--divider);
+      padding-top: 18px;
+      margin-bottom: 12px;
+    }
+    .retry-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      background: transparent;
+      border: 1px solid var(--divider);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: inline-block;
+    }
+    .retry-btn:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+    #result-right {
+      flex: 1;
+      padding: 36px 48px 28px 40px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .polaroids-row {
+      display: flex;
+      gap: 18px;
+      width: 100%;
+      align-items: flex-start;
+    }
+
+    /* ── POLAROIDS ── */
+    @keyframes polaroidIn {
+      from {
+        opacity: 0;
+        transform: rotate(var(--prot,0deg)) translateY(32px) scale(0.88);
+      }
+      to {
+        opacity: 1;
+        transform: rotate(var(--prot,0deg)) translateY(0) scale(1);
+      }
+    }
+    .polaroid {
+      background: var(--card);
+      border-radius: 3px;
+      padding: 12px 12px 38px;
+      flex: 1;
+      box-shadow: 3px 6px 20px var(--shadow);
+      transform: rotate(var(--prot,0deg));
+      transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.25s;
+      animation: polaroidIn 0.58s cubic-bezier(0.34,1.56,0.64,1) both;
+      cursor: default;
+    }
+    .polaroid:hover {
+      transform: rotate(0deg) translateY(-7px) scale(1.025);
+      box-shadow: 6px 12px 36px var(--shadow);
+    }
+    .polaroid:nth-child(1) { --prot: -2deg;   animation-delay: 0.15s; }
+    .polaroid:nth-child(2) { --prot:  1.8deg; animation-delay: 0.28s; margin-top: 22px; }
+    .polaroid:nth-child(3) { --prot: -1.1deg; animation-delay: 0.41s; margin-top: 10px; }
+    .polaroid-photo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      background: #fff;
+      overflow: hidden;
+    }
+    .polaroid-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      mix-blend-mode: multiply;
+    }
+    .polaroid-link {
+      display: inline-block;
+      margin-top: 8px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dell);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .polaroid-link:hover { border-bottom-color: var(--dell); }
+    .polaroid-name {
+      font-family: 'Fraunces', serif;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.3;
+      margin-bottom: 5px;
+    }
+    .polaroid-prices {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin-bottom: 7px;
+    }
+    .polaroid-price {
+      font-family: 'Space Mono', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--era-primary, var(--accent));
+    }
+    .polaroid-original {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      color: var(--ink-soft);
+      opacity: 0.45;
+      text-decoration: line-through;
+    }
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      color: var(--ink-soft);
+      line-height: 1.45;
+      opacity: 0.72;
+    }
+    .polaroid-caption em { font-style: italic; }
+
+    /* ── FOOTER ── */
+    #footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 48px;
+      border-top: 1px solid var(--divider);
+      flex-shrink: 0;
+    }
+    .footer-copy {
+      font-family: 'Space Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+      opacity: 0.45;
+    }
+    .footer-cta {
+      font-family: 'Space Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dell);
+      opacity: 0.65;
+    }
+
+    /* ── STICKY NOTES ── */
+    .sticky {
+      position: fixed;
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      line-height: 1.55;
+      padding: 11px 13px;
+      border-radius: 1px;
+      box-shadow: 3px 4px 12px rgba(0,0,0,0.14);
+      pointer-events: none;
+      z-index: 2;
+      opacity: 0.82;
+      width: 128px;
+    }
+    .sticky-1 {
+      background: var(--sticky-1);
+      color: #2a2000;
+      bottom: 76px;
+      left: 18px;
+      transform: rotate(-3.6deg);
+    }
+    .sticky-2 {
+      background: var(--sticky-2);
+      color: #2a1a00;
+      top: 118px;
+      right: 14px;
+      transform: rotate(2.9deg);
+    }
+    .sticky-3 {
+      background: var(--sticky-3);
+      color: #fff;
+      bottom: 68px;
+      right: 56px;
+      transform: rotate(-1.6deg);
+    }
+
+    /* ── START SCREEN ── */
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    #start-screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 28px;
+      background: var(--bg);
+      z-index: 30;
+      animation: fadeIn 0.55s ease;
+      transition: background 0.4s ease;
+    }
+    #start-screen.out { animation: fadeOut 0.32s ease forwards; }
+    .s-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--dell);
+    }
+    .s-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(46px, 6vw, 82px);
+      font-weight: 300;
+      line-height: 1.04;
+      color: var(--ink);
+      text-align: center;
+      letter-spacing: -0.025em;
+    }
+    .s-title em {
+      font-style: italic;
+      font-weight: 400;
+      display: block;
+    }
+    .s-byline {
+      font-family: 'Caveat', cursive;
+      font-size: 20px;
+      color: var(--ink-soft);
+      text-align: center;
+      opacity: 0.75;
+    }
+    .s-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10.5px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--card);
+      background: var(--ink);
+      border: none;
+      padding: 14px 42px;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: transform 0.22s, box-shadow 0.22s;
+    }
+    .s-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px var(--shadow);
+    }
+
+    /* ── UTILITY ── */
+    .hidden { display: none !important; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      body, html { overflow-y: auto; }
+      #app { height: auto; min-height: 100vh; }
+      #content-area { overflow: visible; }
+      #quiz-view, #result-screen.visible { flex-direction: column; height: auto; }
+      #question-zone, #result-left { width: 100%; border-right: none; border-bottom: 1px solid var(--divider); padding: 24px 20px; }
+      #answer-zone, #result-right { padding: 20px; }
+      .cards-grid { grid-template-columns: 1fr; grid-template-rows: auto; }
+      .polaroids-row { flex-direction: column; align-items: center; }
+      .polaroid { width: 240px; flex: none; }
+      #meta-bar { padding: 10px 16px; }
+      #footer-bar { padding: 8px 16px; }
+      .sticky { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── STICKY NOTES ── -->
+<div class="sticky sticky-1">discover<br>your next<br>chapter ✦</div>
+<div class="sticky sticky-2">black friday<br>is here</div>
+<div class="sticky sticky-3">find your<br>era →</div>
+
+<!-- ── START SCREEN ── -->
+<div id="start-screen">
+  <div class="s-label">Dell Technologies — Black Friday 2026</div>
+  <div class="s-title">
+    The Next
+    <em>Era Event</em>
+  </div>
+  <div class="s-byline">Five questions. One era. Your next chapter starts here.</div>
+  <button class="s-btn" onclick="startQuiz()">Begin Your Era</button>
+</div>
+
+<!-- ── MAIN APP ── -->
+<div id="app">
+
+  <!-- Metadata Bar -->
+  <div id="meta-bar">
+    <div class="meta-left">
+      <div class="brand-lockup">
+        <strong>Dell Technologies</strong><br>Black Friday 2026
+      </div>
+      <div class="divider-dot"></div>
+      <div class="event-name">The Next Era Event</div>
+    </div>
+    <div class="meta-right">
+      <div id="q-counter">Question 1 of 5</div>
+      <button id="mood-toggle" onclick="toggleMood()">
+        <div class="mood-dot"></div>
+        <span id="mood-label">Sage</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Progress Track -->
+  <div id="progress-track">
+    <div id="progress-fill"></div>
+  </div>
+
+  <!-- Content Area -->
+  <div id="content-area">
+
+    <!-- Quiz View -->
+    <div id="quiz-view">
+      <div id="question-zone">
+        <div class="q-top">
+          <div class="q-label" id="q-label">Moment 01</div>
+          <h2 class="q-text" id="q-text"></h2>
+          <p class="q-sub"  id="q-sub"></p>
+        </div>
+        <div class="q-bottom">
+          <p class="nav-hint">tap a card to choose your answer</p>
+        </div>
+      </div>
+      <div id="answer-zone">
+        <div class="cards-grid" id="cards-grid"></div>
+      </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-screen">
+      <div id="result-left">
+        <div class="r-label">Your Era Has Been Revealed</div>
+        <div id="r-era-name"></div>
+        <div id="r-tagline"></div>
+        <div id="r-description"></div>
+        <div class="r-shop-cta">Shop your era at Dell.com &rarr; black friday deals live now</div>
+        <button class="retry-btn" onclick="restartQuiz()">Start Over</button>
+      </div>
+      <div id="result-right">
+        <div class="polaroids-row" id="polaroids-row"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div id="footer-bar">
+    <div class="footer-copy">&copy; 2026 Dell Technologies &middot; Black Friday &middot;</div>
+    <div class="footer-cta">Dell.com/blackfriday</div>
+  </div>
+
+</div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────────────
+
+const QUESTIONS = [
+  {
+    label: 'Moment 01',
+    text:  "What's pulling your <em>attention</em> right now?",
+    sub:   'Choose what feels most true.',
+    answers: [
+      { text: "A project I want to <em>make</em> — something that hasn't existed before.", era: 'creator'  },
+      { text: "Building something that could actually <em>change</em> an industry.",        era: 'visionary'},
+      { text: "Hitting the <em>goals</em> I set for myself — and setting bigger ones.",     era: 'achiever' },
+      { text: "Finding more <em>freedom</em> in how and where I spend my time.",            era: 'explorer' },
+    ]
+  },
+  {
+    label: 'Moment 02',
+    text:  "Where do your best <em>ideas</em> come from?",
+    sub:   'Trust your instinct here.',
+    answers: [
+      { text: "A blank page, a new playlist, and space to <em>wander</em>.",                   era: 'creator'  },
+      { text: "Challenging the <em>premise</em> — asking why it has to be this way at all.",   era: 'visionary'},
+      { text: "A clear goal, a deadline, and the drive to <em>outperform</em>.",               era: 'achiever' },
+      { text: "New places, new people — <em>movement</em> unlocks everything.",                era: 'explorer' },
+    ]
+  },
+  {
+    label: 'Moment 03',
+    text:  "What does a <em>good day</em> look like for you?",
+    sub:   'Paint the picture.',
+    answers: [
+      { text: "I made something <em>beautiful</em> and people felt it.",                         era: 'creator'  },
+      { text: "I moved something forward that matters — at <em>scale</em>.",                     era: 'visionary'},
+      { text: "I crossed every item off the list and still had <em>energy</em> left.",           era: 'achiever' },
+      { text: "I was somewhere I'd never been, doing something <em>unexpected</em>.",            era: 'explorer' },
+    ]
+  },
+  {
+    label: 'Moment 04',
+    text:  "What are you <em>ready</em> to do more of?",
+    sub:   'No wrong answer.',
+    answers: [
+      { text: "Releasing work into the world — more <em>boldly</em>.",              era: 'creator'  },
+      { text: "Taking the big <em>swing</em>, not just the safe one.",              era: 'visionary'},
+      { text: "Leading — stepping into rooms where <em>decisions</em> are made.",  era: 'achiever' },
+      { text: "Saying yes to things that <em>scare</em> me a little.",              era: 'explorer' },
+    ]
+  },
+  {
+    label: 'Moment 05',
+    text:  "Which word feels most like your <em>next chapter</em>?",
+    sub:   'The last one. Make it count.',
+    answers: [
+      { text: "<em>Expression.</em> My voice, my vision, my mark on the world.",           era: 'creator'  },
+      { text: "<em>Impact.</em> Something I built that outlasts the moment.",              era: 'visionary'},
+      { text: "<em>Momentum.</em> Forward, always — with intention behind every step.",   era: 'achiever' },
+      { text: "<em>Freedom.</em> The open road, the open tab, the open question.",         era: 'explorer' },
+    ]
+  }
+];
+
+const ERAS = {
+  creator: {
+    name:          'The Creator Era',
+    tagline:       'You don\'t follow trends. You set them.',
+    description:   'Your next chapter is defined by what you make — the art, the content, the work that only you could bring into the world. This era belongs to the ones who build beautiful things and dare to share them.',
+    primaryColor:  '#8B5CF6',
+    products: [
+      { name: 'Dell XPS 16',                   price: '$1,799', orig: '$2,199', save: '$400', caption: 'Your work deserves a canvas this beautiful.',      imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/16-9640/media-gallery/silver/touch/notebook-laptop-xps-16-9640-t-silver-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=612&qlt=100,1&resMode=sharp2&size=612,402&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/xps-16-laptop/spd/xps-16-9640-laptop' },
+      { name: 'Dell UltraSharp 27 4K Monitor', price: '$449',   orig: '$699',   save: '$250', caption: 'Every pixel of your vision, rendered faithfully.',  imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2725qe/media-gallery/monitor-ultrasharp-u2725qe-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=906&qlt=100,1&resMode=sharp2&size=906,804&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-27-4k-thunderbolt-hub-monitor-u2725qe/apd/210-bqhr/monitors-monitor-accessories' },
+      { name: 'Dell Canvas 27',                price: '$1,299', orig: '$1,799', save: '$500', caption: 'Draw, design, and create right on your screen.',    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/workstations/dell-canvas/kv2718d/canvas-kv2718d-bk-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/cty/dell-canvas/spd/dell-canvas-kv2718d' },
+    ]
+  },
+  achiever: {
+    name:          'The Achiever Era',
+    tagline:       'You don\'t aim for the bar. You raise it.',
+    description:   'Strategy, execution, and relentless forward motion — this era is for the ones who turn ambition into outcomes. You lead rooms, hit goals, and immediately set bigger ones.',
+    primaryColor:  '#F59E0B',
+    products: [
+      { name: 'Dell Latitude 9550',            price: '$1,899', orig: '$2,399', save: '$500', caption: 'Business-grade speed, security, and stamina.',    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/latitude-notebooks/latitude-14-9450-laptop-2-in-1/mg/notebook-latitude-14-9450-t-wlan-gray-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/latitude-9450-2-in-1/spd/latitude-14-9450-2-in-1-laptop' },
+      { name: 'Dell Thunderbolt Dock WD22TB4', price: '$249',   orig: '$349',   save: '$100', caption: 'One cable. Every device. Zero friction.',           imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/docks/dell-thunderbolt-4-dock-wd22tb4/spi/ng/dock-wd22tb4-black-campaign-hero-504x350-ng.psd?qlt=95&fmt=jpg', productUrl: 'https://www.dell.com/en-us/shop/dell-thunderbolt-dock-wd22tb4/apd/210-bdqh/docks' },
+      { name: 'Dell 27 Monitor P2725HE',       price: '$299',   orig: '$449',   save: '$150', caption: 'Clear display for the decisions that matter.',     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/p-series/p2725he/media-gallery/monitor-pseries-p2725he-bk-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=907&qlt=100,1&resMode=sharp2&size=907,804&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-pro-27-plus-usb-c-hub-monitor-p2725he/apd/210-bmfq/monitors-monitor-accessories' },
+    ]
+  },
+  explorer: {
+    name:          'The Explorer Era',
+    tagline:       'The whole world is your workspace.',
+    description:   'You don\'t need a desk to do your best work. This era belongs to the ones who thrive in motion — trading the commute for curiosity and building a life that moves as fast as you do.',
+    primaryColor:  '#10B981',
+    products: [
+      { name: 'Dell XPS 13',                     price: '$1,099', orig: '$1,399', save: '$300', caption: 'The whole world is your office.',                imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/9345/media-gallery/touch/silver/xps-13-9345-laptop-silver-copilot-pc-mg.png?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=612&qlt=100,1&resMode=sharp2&size=612,402&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/xps-13-laptop/spd/xps-13-9345-laptop' },
+      { name: 'Dell Pro Wireless Headset WL5022', price: '$149',   orig: '$229',   save: '$80',  caption: 'Crystal-clear calls from wherever you roam.',   imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/electronics-and-accessories/dell/headphones/wl5022/wl5022-xau-02-bk.psd?fmt=jpg&wid=527&hei=527', productUrl: 'https://www.dell.com/en-us/shop/dell-pro-wireless-headset-wl5022/apd/520-aatb/pc-accessories' },
+      { name: 'Dell Power Companion PW7018LC',    price: '$129',   orig: '$179',   save: '$50',  caption: 'Keep going long after the outlet runs out.',     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/electronics-and-accessories/dell/power-adapters-batteries/pw7018lc/pw7018lc-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-notebook-power-bank-plus-usb-c-65wh-pw7018lc/apd/451-bcev/pc-accessories' },
+    ]
+  },
+  visionary: {
+    name:          'The Visionary Era',
+    tagline:       'You\'re not disrupting the industry. You\'re building the next one.',
+    description:   'Legacy-level thinking, mission-driven work, and the courage to bet on ideas that haven\'t been proven yet. This era is for the ones who don\'t just see what\'s coming — they build it.',
+    primaryColor:  '#7C3AED',
+    products: [
+      { name: 'Dell XPS 16',                      price: '$1,799', orig: '$2,199', save: '$400', caption: 'Power that matches the scale of your ambition.',          imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/16-9640/media-gallery/silver/touch/notebook-laptop-xps-16-9640-t-silver-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=612&qlt=100,1&resMode=sharp2&size=612,402&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/xps-16-laptop/spd/xps-16-9640-laptop' },
+      { name: 'Dell 40 Curved Conference Monitor', price: '$999',   orig: '$1,399', save: '$400', caption: 'A panoramic view for people thinking at that scale.',  imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u4025qw/media-gallery/monitor-ultrasharp-u4025qw-gray-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=1242&qlt=100,1&resMode=sharp2&size=1242,804&chrss=full', productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-40-curved-thunderbolt-hub-monitor-u4025qw/apd/210-bmdp/monitors-monitor-accessories' },
+      { name: 'Dell Premier Wireless KM7321W',     price: '$249',   orig: '$349',   save: '$100', caption: 'A workspace as polished as your pitch.',                  imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/peripherals/input-devices/dell/keyboards/km7321w/global-spi/ng/dell-keyboard-mouse-km7321w-pdp-relsize-500-ng.psd?fmt=png-alpha', productUrl: 'https://www.dell.com/en-us/shop/dell-premier-multi-device-wireless-keyboard-and-mouse-km7321w/apd/580-ajix/pc-accessories' },
+    ]
+  }
+};
+
+// ── STATE ─────────────────────────────────────────────────────────────
+
+let currentQ  = 0;
+let scores    = { creator: 0, achiever: 0, explorer: 0, visionary: 0 };
+let mood      = localStorage.getItem('era-mood') || 'sage';
+let answering = false;
+
+// ── INIT ──────────────────────────────────────────────────────────────
+
+(function init() {
+  document.documentElement.setAttribute('data-mood', mood);
+  document.getElementById('mood-label').textContent = mood === 'sage' ? 'Sage' : 'Sand';
+})();
+
+// ── START ─────────────────────────────────────────────────────────────
+
+function startQuiz() {
+  const ss = document.getElementById('start-screen');
+  ss.classList.add('out');
+  setTimeout(() => {
+    ss.style.display = 'none';
+    renderQuestion(0);
+  }, 320);
+}
+
+// ── RENDER QUESTION ───────────────────────────────────────────────────
+
+function renderQuestion(idx) {
+  currentQ  = idx;
+  answering = false;
+  const q   = QUESTIONS[idx];
+
+  document.getElementById('q-counter').textContent   = `Question ${idx + 1} of 5`;
+  document.getElementById('progress-fill').style.width = `${(idx / 5) * 100}%`;
+  document.getElementById('q-label').textContent     = q.label;
+  document.getElementById('q-text').innerHTML        = q.text;
+  document.getElementById('q-sub').textContent       = q.sub;
+
+  const grid    = document.getElementById('cards-grid');
+  const letters = ['A', 'B', 'C', 'D'];
+  grid.innerHTML = '';
+
+  q.answers.forEach((ans, i) => {
+    const card = document.createElement('div');
+    card.className = 'answer-card';
+    card.innerHTML = `
+      <div class="card-letter">${letters[i]}</div>
+      <div class="card-text">${ans.text}</div>
+      <div class="card-check">✓</div>`;
+    card.addEventListener('click', () => pickAnswer(card, ans.era));
+    grid.appendChild(card);
+  });
+}
+
+// ── PICK ANSWER ───────────────────────────────────────────────────────
+
+function pickAnswer(cardEl, era) {
+  if (answering) return;
+  answering = true;
+
+  document.querySelectorAll('.answer-card').forEach(c => c.classList.remove('selected'));
+  cardEl.classList.add('selected');
+  scores[era]++;
+
+  setTimeout(() => {
+    if (currentQ < QUESTIONS.length - 1) {
+      fadeContent(() => renderQuestion(currentQ + 1));
+    } else {
+      fadeContent(showResult);
+    }
+  }, 520);
+}
+
+// ── FADE TRANSITION ───────────────────────────────────────────────────
+
+function fadeContent(cb) {
+  const qv = document.getElementById('quiz-view');
+  qv.style.transition = 'opacity 0.22s ease';
+  qv.style.opacity    = '0';
+  setTimeout(() => {
+    qv.style.opacity    = '1';
+    qv.style.transition = '';
+    cb();
+  }, 220);
+}
+
+// ── SHOW RESULT ───────────────────────────────────────────────────────
+
+function showResult() {
+  const topEra = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
+  const era    = ERAS[topEra];
+
+  localStorage.setItem('era-result', topEra);
+
+  document.getElementById('progress-fill').style.width = '100%';
+  document.getElementById('q-counter').textContent     = 'Era Revealed';
+
+  // Swap views
+  document.getElementById('quiz-view').style.display    = 'none';
+  const rs = document.getElementById('result-screen');
+  rs.classList.add('visible');
+  rs.style.setProperty('--era-primary', era.primaryColor);
+
+  // Fill copy
+  document.getElementById('r-era-name').textContent    = era.name;
+  document.getElementById('r-tagline').textContent     = era.tagline;
+  document.getElementById('r-description').textContent = era.description;
+
+  // Render polaroids
+  const row = document.getElementById('polaroids-row');
+  row.innerHTML = '';
+  era.products.forEach(p => {
+    const pol = document.createElement('div');
+    pol.className = 'polaroid';
+    pol.style.setProperty('--era-primary', era.primaryColor);
+    pol.innerHTML = `
+      <div class="polaroid-photo">
+        <img src="${p.imageUrl}" alt="${p.name}" class="polaroid-img" />
+      </div>
+      <div class="polaroid-name">${p.name}</div>
+      <div class="polaroid-prices">
+        <span class="polaroid-price">${p.price}</span>
+        <span class="polaroid-original">${p.orig}</span>
+      </div>
+      <div class="polaroid-caption">${p.caption}<br><em>Save ${p.save}</em></div>
+      <a href="${p.productUrl}" target="_blank" rel="noopener noreferrer" class="polaroid-link">Shop on Dell.com →</a>`;
+    row.appendChild(pol);
+  });
+}
+
+// ── RESTART ───────────────────────────────────────────────────────────
+
+function restartQuiz() {
+  scores    = { creator: 0, achiever: 0, explorer: 0, visionary: 0 };
+  answering = false;
+  localStorage.removeItem('era-result');
+
+  document.getElementById('result-screen').classList.remove('visible');
+  const qv = document.getElementById('quiz-view');
+  qv.style.display = '';
+  qv.style.opacity = '1';
+
+  renderQuestion(0);
+}
+
+// ── MOOD TOGGLE ───────────────────────────────────────────────────────
+
+function toggleMood() {
+  mood = mood === 'sage' ? 'sand' : 'sage';
+  document.documentElement.setAttribute('data-mood', mood);
+  document.getElementById('mood-label').textContent = mood === 'sage' ? 'Sage' : 'Sand';
+  localStorage.setItem('era-mood', mood);
+}
+</script>
+</body>
+</html>

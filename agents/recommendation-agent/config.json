@@ -1,0 +1,17 @@
+{
+  "agent": "recommendation-agent",
+  "version": "1.0.0",
+  "model": "gemini-1.5-pro",
+  "maxTokens": 1024,
+  "temperature": 0.3,
+  "productsPerReveal": 3,
+  "alwaysIncludeHeroProduct": true,
+  "heroProductCategory": "laptop",
+  "secondProductCategory": "monitor",
+  "thirdProductCategory": "any",
+  "priceSortOrder": "savings_desc",
+  "personalizationLevel": "high",
+  "requireNarrativeMatch": true,
+  "blackFridayMode": true,
+  "urgencyThreshold": 48
+}

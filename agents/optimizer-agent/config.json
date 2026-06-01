@@ -1,0 +1,11 @@
+{
+  "agent": "optimizer-agent",
+  "version": "1.0.0",
+  "model": "gemini-1.5-flash",
+  "maxTokens": 256,
+  "temperature": 0.2,
+  "analysisMode": "async",
+  "reportingCadence": "hourly",
+  "abTestingEnabled": true,
+  "minSessionsForSignificance": 100
+}

@@ -1,0 +1,10 @@
+{
+  "agent": "planner-agent",
+  "version": "1.0.0",
+  "parallelAgentCalls": true,
+  "maxOrchestrationDepth": 3,
+  "timeoutMs": 15000,
+  "fallbackEnabled": true,
+  "stateBackend": "in-memory",
+  "sessionTTLMinutes": 60
+}

@@ -1,0 +1,28 @@
+{
+  "agent": "conversational-agent",
+  "version": "1.0.0",
+  "model": "gemini-1.5-pro",
+  "maxTokens": 512,
+  "temperature": 0.8,
+  "topP": 0.9,
+  "questionsToAsk": 5,
+  "maxTurnsBeforeHandoff": 12,
+  "minAnswerWordCount": 3,
+  "probeDeeperThreshold": 5,
+  "allowOffTopicGrace": true,
+  "personality": {
+    "warmth": 0.9,
+    "directness": 0.6,
+    "mystique": 0.5,
+    "salesPressure": 0.0
+  },
+  "forbiddenPhrases": [
+    "Great answer",
+    "That's interesting",
+    "purchase",
+    "buy now",
+    "shop",
+    "deal",
+    "price"
+  ]
+}

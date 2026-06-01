@@ -1,0 +1,58 @@
+{
+  "version": "1.0.0",
+  "baseTheme": {
+    "background": "#0A0A0F",
+    "surface": "#12121A",
+    "surfaceMuted": "#1E1E2E",
+    "textPrimary": "#FAFAFA",
+    "textSecondary": "#A0A0B0",
+    "textMuted": "#4A4A6A",
+    "dellBlue": "#007DB8",
+    "borderSubtle": "rgba(255,255,255,0.06)",
+    "borderMedium": "rgba(255,255,255,0.12)"
+  },
+  "eraThemes": {
+    "creator": {
+      "primaryColor": "#8B5CF6",
+      "secondaryColor": "#EC4899",
+      "gradientCSS": "linear-gradient(135deg, #8B5CF6, #EC4899)",
+      "glowColor": "rgba(139,92,246,0.2)",
+      "cardBorder": "rgba(139,92,246,0.3)"
+    },
+    "innovator": {
+      "primaryColor": "#06B6D4",
+      "secondaryColor": "#3B82F6",
+      "gradientCSS": "linear-gradient(135deg, #06B6D4, #3B82F6)",
+      "glowColor": "rgba(6,182,212,0.2)",
+      "cardBorder": "rgba(6,182,212,0.3)"
+    },
+    "achiever": {
+      "primaryColor": "#F59E0B",
+      "secondaryColor": "#DC2626",
+      "gradientCSS": "linear-gradient(135deg, #F59E0B, #DC2626)",
+      "glowColor": "rgba(245,158,11,0.2)",
+      "cardBorder": "rgba(245,158,11,0.3)"
+    },
+    "explorer": {
+      "primaryColor": "#10B981",
+      "secondaryColor": "#059669",
+      "gradientCSS": "linear-gradient(135deg, #10B981, #059669)",
+      "glowColor": "rgba(16,185,129,0.2)",
+      "cardBorder": "rgba(16,185,129,0.3)"
+    },
+    "visionary": {
+      "primaryColor": "#7C3AED",
+      "secondaryColor": "#DC2626",
+      "gradientCSS": "linear-gradient(135deg, #7C3AED, #DC2626)",
+      "glowColor": "rgba(124,58,237,0.2)",
+      "cardBorder": "rgba(124,58,237,0.3)"
+    },
+    "performer": {
+      "primaryColor": "#EF4444",
+      "secondaryColor": "#F97316",
+      "gradientCSS": "linear-gradient(135deg, #EF4444, #F97316)",
+      "glowColor": "rgba(239,68,68,0.2)",
+      "cardBorder": "rgba(239,68,68,0.3)"
+    }
+  }
+}

@@ -1,0 +1,302 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-11-27",
+  "catalog": [
+    {
+      "id": "xps-16-9640",
+      "name": "Dell XPS 16",
+      "model": "XPS 16 9640",
+      "category": "laptop",
+      "eras": ["creator", "visionary"],
+      "price": 1799,
+      "originalPrice": 2199,
+      "savings": 400,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "creator": "Your work deserves a canvas this beautiful.",
+        "visionary": "Power that matches the scale of your ambition."
+      },
+      "description": "16.3\" OLED display, Intel Core Ultra 9, 32GB RAM, NVIDIA GeForce RTX 4060",
+      "specs": ["16.3\" 3.2K OLED 120Hz", "Intel Core Ultra 9 185H", "32GB LPDDR5x RAM", "1TB NVMe SSD", "NVIDIA RTX 4060 8GB"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "xps-15-9530",
+      "name": "Dell XPS 15 Developer Edition",
+      "model": "XPS 15 9530",
+      "category": "laptop",
+      "eras": ["innovator"],
+      "price": 1599,
+      "originalPrice": 1999,
+      "savings": 400,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "innovator": "Linux-ready. Performance-proven. Built for builders."
+      },
+      "description": "Ubuntu pre-installed, 15.6\" OLED, Intel Core i9, 32GB RAM",
+      "specs": ["15.6\" 3.5K OLED 60Hz", "Intel Core i9-13900H", "32GB DDR5 RAM", "1TB NVMe SSD", "NVIDIA RTX 4060"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "latitude-9550",
+      "name": "Dell Latitude 9550",
+      "model": "Latitude 9550",
+      "category": "laptop",
+      "eras": ["achiever"],
+      "price": 1899,
+      "originalPrice": 2399,
+      "savings": 500,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "achiever": "Business-grade speed, security, and stamina."
+      },
+      "description": "15\" business ultrabook, Intel vPro, built-in AI features, MIL-SPEC tested",
+      "specs": ["15\" FHD+ IPS 60Hz", "Intel Core Ultra 7 vPro", "16GB LPDDR5 RAM", "512GB SSD", "Intel Arc Graphics"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "xps-13-9340",
+      "name": "Dell XPS 13",
+      "model": "XPS 13 9340",
+      "category": "laptop",
+      "eras": ["explorer"],
+      "price": 1099,
+      "originalPrice": 1399,
+      "savings": 300,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "explorer": "The whole world is your office."
+      },
+      "description": "13.4\" ultraportable, 1.17kg, 12-hour battery, Thunderbolt 4",
+      "specs": ["13.4\" FHD+ IPS 60Hz", "Intel Core i7-1355U", "16GB LPDDR5 RAM", "512GB SSD", "Intel Iris Xe"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "alienware-m18-r2",
+      "name": "Alienware m18 R2",
+      "model": "Alienware m18 R2",
+      "category": "laptop",
+      "eras": ["performer"],
+      "price": 2299,
+      "originalPrice": 2999,
+      "savings": 700,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "performer": "Uncompromising. Just like you."
+      },
+      "description": "18\" gaming laptop, RTX 4090, 240Hz display, Cherry MX keyboard",
+      "specs": ["18\" QHD+ 240Hz", "Intel Core i9-13980HX", "32GB DDR5 RAM", "2TB NVMe SSD", "NVIDIA RTX 4090 16GB"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "ultrasharp-27-4k",
+      "name": "Dell UltraSharp 27 4K Monitor",
+      "model": "U2723QE",
+      "category": "monitor",
+      "eras": ["creator", "innovator"],
+      "price": 449,
+      "originalPrice": 699,
+      "savings": 250,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "creator": "Every pixel of your vision, rendered faithfully.",
+        "innovator": "Dual-monitor productivity for the things you're building."
+      },
+      "description": "27\" 4K IPS Black, 100% sRGB, USB-C 90W charging, built-in KVM",
+      "specs": ["27\" 4K 3840x2160 IPS Black", "100% sRGB, 98% DCI-P3", "USB-C 90W", "Built-in KVM", "99.5% uptime design"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "ultrasharp-32-4k-usbc",
+      "name": "Dell UltraSharp 32 4K USB-C Monitor",
+      "model": "U3223QE",
+      "category": "monitor",
+      "eras": ["innovator", "visionary"],
+      "price": 699,
+      "originalPrice": 999,
+      "savings": 300,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "innovator": "More screen. More context. More you.",
+        "visionary": "A panoramic view for people thinking at that scale."
+      },
+      "description": "32\" 4K IPS, USB-C 90W, daisy-chain DisplayPort, built-in KVM",
+      "specs": ["32\" 4K 3840x2160 IPS", "USB-C 90W", "Daisy-chain DP 1.4", "Built-in KVM", "Color calibration report"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "dell-40-curved",
+      "name": "Dell 40 Curved Conference Monitor",
+      "model": "C4023D",
+      "category": "monitor",
+      "eras": ["visionary", "achiever"],
+      "price": 999,
+      "originalPrice": 1399,
+      "savings": 400,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "visionary": "A panoramic view for people thinking at that scale.",
+        "achiever": "Command the room — even when the room is your screen."
+      },
+      "description": "40\" curved WUHD 5K2K, built-in conferencing cam, speaker, Teams certified",
+      "specs": ["40\" WUHD 5120x2160 IPS", "Built-in 4K webcam", "Built-in speaker/mic array", "Teams/Zoom certified", "USB-C 90W"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "alienware-34-qd-oled",
+      "name": "Alienware 34 QD-OLED",
+      "model": "AW3423DWF",
+      "category": "monitor",
+      "eras": ["performer"],
+      "price": 899,
+      "originalPrice": 1299,
+      "savings": 400,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "performer": "Every frame a performance. Every color, truth."
+      },
+      "description": "34\" curved QD-OLED, 165Hz, 0.1ms response, 99.3% DCI-P3",
+      "specs": ["34\" QD-OLED 3440x1440", "165Hz 0.1ms", "99.3% DCI-P3", "Dolby Vision", "AlienFX lighting"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "dell-canvas-27",
+      "name": "Dell Canvas 27",
+      "model": "27 Creative Canvas",
+      "category": "monitor",
+      "eras": ["creator"],
+      "price": 1299,
+      "originalPrice": 1799,
+      "savings": 500,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "creator": "Draw, design, and create right on your screen."
+      },
+      "description": "27\" touch-enabled creative canvas, 2560x1440, stylus support, tilt-adjustable",
+      "specs": ["27\" QHD 2560x1440 IPS Touch", "Stylus included", "Tilt 0-75°", "8192 pressure levels", "USB-C + DisplayPort"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "precision-5690",
+      "name": "Dell Precision 5690",
+      "model": "Precision 5690",
+      "category": "laptop",
+      "eras": ["innovator"],
+      "price": 2299,
+      "originalPrice": 2999,
+      "savings": 700,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "innovator": "Workstation-class power for workstation-class ideas."
+      },
+      "description": "16\" mobile workstation, ISV certified, NVIDIA RTX A2000, ECC memory option",
+      "specs": ["16\" FHD+ IPS 60Hz", "Intel Core i9 vPro", "32GB ECC RAM", "1TB SSD", "NVIDIA RTX A2000 8GB"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "thunderbolt-dock-wd22tb4",
+      "name": "Dell Thunderbolt Dock",
+      "model": "WD22TB4",
+      "category": "dock",
+      "eras": ["achiever", "innovator"],
+      "price": 249,
+      "originalPrice": 349,
+      "savings": 100,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "achiever": "One cable. Every device. Zero friction.",
+        "innovator": "Your whole dev setup, connected in one click."
+      },
+      "description": "Thunderbolt 4 dock, 180W charging, dual 4K 60Hz displays, 12 ports",
+      "specs": ["Thunderbolt 4", "12 ports", "180W laptop charging", "Dual 4K 60Hz", "HDMI + DP + 4x USB-A + 3x USB-C"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "pro-wireless-headset-wl5022",
+      "name": "Dell Pro Wireless Headset",
+      "model": "WL5022",
+      "category": "headset",
+      "eras": ["explorer", "achiever"],
+      "price": 149,
+      "originalPrice": 229,
+      "savings": 80,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "explorer": "Crystal-clear calls from wherever you roam.",
+        "achiever": "Sound as professional as you are."
+      },
+      "description": "Wireless headset, 40hr battery, Teams certified, AI noise cancellation",
+      "specs": ["Wireless 2.4GHz + Bluetooth", "40-hour battery", "AI noise cancellation", "Teams/Zoom certified", "Lightweight 165g"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "alienware-pro-mouse-aw920m",
+      "name": "Alienware Pro Wireless Gaming Mouse",
+      "model": "AW920M",
+      "category": "mouse",
+      "eras": ["performer"],
+      "price": 149,
+      "originalPrice": 189,
+      "savings": 40,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "performer": "Precision at 26,000 DPI. No excuses."
+      },
+      "description": "Tri-mode wireless, 26,000 DPI, 100hr battery, AlienFX RGB",
+      "specs": ["26,000 DPI optical", "Tri-mode wireless", "100-hour battery", "AlienFX RGB", "6 programmable buttons"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "premier-wireless-km7321w",
+      "name": "Dell Premier Wireless Keyboard and Mouse",
+      "model": "KM7321W",
+      "category": "keyboard",
+      "eras": ["visionary", "achiever"],
+      "price": 249,
+      "originalPrice": 349,
+      "savings": 100,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "visionary": "A workspace as polished as your pitch.",
+        "achiever": "Professional quality for professional decisions."
+      },
+      "description": "Multi-device Bluetooth, rechargeable, quiet keys, premium aluminum",
+      "specs": ["Bluetooth 5.0 + USB receiver", "Multi-device (3 devices)", "Rechargeable", "Quiet typing keys", "Brushed aluminum"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "power-companion-pw7018lc",
+      "name": "Dell Power Companion",
+      "model": "PW7018LC",
+      "category": "accessory",
+      "eras": ["explorer"],
+      "price": 129,
+      "originalPrice": 179,
+      "savings": 50,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "explorer": "Keep going long after the outlet runs out."
+      },
+      "description": "18,000 mAh laptop battery bank, USB-C, charges most Dell laptops",
+      "specs": ["18,000 mAh", "USB-C 45W output", "USB-A 5W output", "Charges most Dell laptops", "TSA carry-on approved"],
+      "dealEnds": "2026-12-01"
+    },
+    {
+      "id": "monitor-p2725he",
+      "name": "Dell 27 Monitor",
+      "model": "P2725HE",
+      "category": "monitor",
+      "eras": ["achiever"],
+      "price": 299,
+      "originalPrice": 449,
+      "savings": 150,
+      "badge": "Black Friday Deal",
+      "taglines": {
+        "achiever": "Clear display for the decisions that matter."
+      },
+      "description": "27\" FHD IPS, USB-C 90W, 4x USB-A hub, height adjustable",
+      "specs": ["27\" FHD 1920x1080 IPS", "USB-C 90W", "4x USB-A hub", "Height/tilt/swivel adjust", "99% sRGB"],
+      "dealEnds": "2026-12-01"
+    }
+  ]
+}

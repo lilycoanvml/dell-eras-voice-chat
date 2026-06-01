@@ -1,0 +1,41 @@
+{
+  "version": "1.0.0",
+  "namingVariants": {
+    "creator": [
+      { "name": "The Creator Era", "tone": "broad", "resonatesWith": ["gen-z", "millennials"] },
+      { "name": "The Maker Era", "tone": "artisanal", "resonatesWith": ["craft-focused"] },
+      { "name": "The Studio Era", "tone": "professional", "resonatesWith": ["design-pros"] }
+    ],
+    "innovator": [
+      { "name": "The Innovator Era", "tone": "aspirational", "resonatesWith": ["tech-builders"] },
+      { "name": "The Builder Era", "tone": "direct", "resonatesWith": ["developers", "engineers"] },
+      { "name": "The Architect Era", "tone": "elevated", "resonatesWith": ["senior-engineers"] }
+    ],
+    "achiever": [
+      { "name": "The Achiever Era", "tone": "motivational", "resonatesWith": ["business-leaders"] },
+      { "name": "The Executive Era", "tone": "formal", "resonatesWith": ["c-suite"] },
+      { "name": "The Operator Era", "tone": "startup", "resonatesWith": ["operators", "founders"] }
+    ],
+    "explorer": [
+      { "name": "The Explorer Era", "tone": "adventurous", "resonatesWith": ["nomads", "remote-workers"] },
+      { "name": "The Nomad Era", "tone": "specific", "resonatesWith": ["digital-nomads"] },
+      { "name": "The Freedom Era", "tone": "aspirational", "resonatesWith": ["gen-z", "millennials"] }
+    ],
+    "visionary": [
+      { "name": "The Visionary Era", "tone": "ambitious", "resonatesWith": ["founders", "entrepreneurs"] },
+      { "name": "The Founder Era", "tone": "startup", "resonatesWith": ["early-stage-founders"] },
+      { "name": "The Pioneer Era", "tone": "historical", "resonatesWith": ["industry-changers"] }
+    ],
+    "performer": [
+      { "name": "The Performer Era", "tone": "broad", "resonatesWith": ["gamers", "streamers"] },
+      { "name": "The Gamer Era", "tone": "direct", "resonatesWith": ["core-gamers"] },
+      { "name": "The Contender Era", "tone": "competitive", "resonatesWith": ["esports", "competitive-gamers"] }
+    ]
+  },
+  "taglineFormulas": [
+    "[Your X] is your [Y].",
+    "You [verb] what others only [verb].",
+    "The [noun] is the only setting you know.",
+    "When you [verb], the world [verb]."
+  ]
+}

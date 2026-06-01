@@ -1,0 +1,12 @@
+{
+  "agent": "ui-agent",
+  "version": "1.0.0",
+  "renderMode": "client",
+  "animationsEnabled": true,
+  "reducedMotionRespected": true,
+  "revealDelayMs": 300,
+  "productStaggerMs": 150,
+  "scrollBehavior": "smooth",
+  "mobileBreakpoint": 768,
+  "darkModeOnly": true
+}

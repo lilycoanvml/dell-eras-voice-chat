@@ -1,0 +1,12 @@
+{
+  "agent": "trend-culture-agent",
+  "version": "1.0.0",
+  "model": "gemini-1.5-pro",
+  "maxTokens": 256,
+  "temperature": 0.9,
+  "creativityLevel": "high",
+  "culturalRefreshCadence": "weekly",
+  "targetGenerations": ["gen-z", "millennials", "gen-x"],
+  "avoidedLanguage": ["professional", "enterprise", "solution", "leverage", "synergy", "robust", "seamless"],
+  "preferredLanguage": ["era", "chapter", "becoming", "craft", "momentum", "shift", "next"]
+}

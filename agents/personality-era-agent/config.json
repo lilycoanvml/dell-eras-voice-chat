@@ -1,0 +1,16 @@
+{
+  "agent": "personality-era-agent",
+  "version": "1.0.0",
+  "model": "gemini-1.5-pro",
+  "maxTokens": 1024,
+  "temperature": 0.4,
+  "topP": 0.85,
+  "classificationMode": "holistic",
+  "tieBreakStrategy": "q5_weight",
+  "q5WeightMultiplier": 2.0,
+  "requireMinKeywordMatches": 2,
+  "outputFormat": "json_only",
+  "personalizationLevel": "high",
+  "mustReferenceUserWords": true,
+  "productsPerEra": 3
+}

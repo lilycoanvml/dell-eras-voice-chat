@@ -1,0 +1,24 @@
+{
+  "version": "1.0.0",
+  "engagementScoreWeights": {
+    "conversationCompleted": 40,
+    "eraRevealViewed": 20,
+    "productsScrolled": 15,
+    "productClicked": 15,
+    "sessionDurationOver3Min": 10
+  },
+  "answerQualityRubric": {
+    "poor": { "minWords": 0, "maxWords": 4, "score": 1 },
+    "fair": { "minWords": 5, "maxWords": 14, "score": 3 },
+    "good": { "minWords": 15, "maxWords": 40, "score": 5 },
+    "excellent": { "minWords": 41, "maxWords": 999, "score": 7 }
+  },
+  "eraDistributionTargets": {
+    "creator": 0.22,
+    "innovator": 0.20,
+    "achiever": 0.18,
+    "explorer": 0.15,
+    "visionary": 0.13,
+    "performer": 0.12
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "agent": "newfeatures-agent",
+  "version": "1.0.0",
+  "model": "gemini-1.5-pro",
+  "maxTokens": 512,
+  "temperature": 0.8,
+  "experimentFramework": "internal",
+  "autoGraduateEnabled": false,
+  "maxConcurrentExperiments": 3,
+  "requireStakeholderApproval": true
+}

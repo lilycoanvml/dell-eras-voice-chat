@@ -1,0 +1,40 @@
+{
+  "version": "1.0.0",
+  "traitClusters": {
+    "creative-expressive": {
+      "eras": ["creator"],
+      "traits": ["aesthetic-driven", "self-expressive", "portfolio-minded", "beauty-seeking"],
+      "signals": ["I want to make things", "visual", "design", "my work reflects who I am"]
+    },
+    "technical-builder": {
+      "eras": ["innovator"],
+      "traits": ["systems-thinking", "builder-mentality", "precision-focused", "open-source-minded"],
+      "signals": ["I want to build", "code", "ship", "engineer", "the architecture"]
+    },
+    "leadership-operator": {
+      "eras": ["achiever"],
+      "traits": ["results-oriented", "people-focused", "strategic", "impact-driven"],
+      "signals": ["my team", "scale", "growth", "performance", "lead"]
+    },
+    "freedom-seeker": {
+      "eras": ["explorer"],
+      "traits": ["location-independent", "experience-driven", "flexible", "minimalist"],
+      "signals": ["travel", "remote", "freedom", "anywhere", "not tied down"]
+    },
+    "disruption-founder": {
+      "eras": ["visionary"],
+      "traits": ["mission-driven", "long-term", "risk-tolerant", "category-creating"],
+      "signals": ["change the world", "launch", "company", "disrupt", "legacy"]
+    },
+    "performance-entertainer": {
+      "eras": ["performer"],
+      "traits": ["competitive", "audience-minded", "mastery-seeking", "community-builder"],
+      "signals": ["game", "stream", "compete", "entertain", "rank"]
+    }
+  },
+  "hybridSignals": {
+    "creator+innovator": ["design engineer", "creative technologist", "developer who designs", "builds things that look beautiful"],
+    "visionary+achiever": ["entrepreneur with a team", "scaling startup", "growth-stage founder"],
+    "explorer+creator": ["traveling creative", "remote designer", "digital nomad who makes content"]
+  }
+}

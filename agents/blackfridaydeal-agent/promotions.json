@@ -1,0 +1,42 @@
+{
+  "version": "1.0.0",
+  "campaign": "Black Friday 2026",
+  "activeWindow": {
+    "start": "2026-11-27T00:00:00Z",
+    "end": "2026-12-01T23:59:59Z"
+  },
+  "promotions": [
+    {
+      "id": "bf24-laptop-savings",
+      "name": "Black Friday Laptop Event",
+      "description": "Up to $700 off select laptops",
+      "discountType": "fixed",
+      "appliesTo": "laptops",
+      "minSavings": 300,
+      "maxSavings": 700,
+      "badge": "Black Friday Deal",
+      "urgencyThresholdHours": 48
+    },
+    {
+      "id": "bf24-monitor-event",
+      "name": "Black Friday Monitor Event",
+      "description": "Up to $500 off select monitors",
+      "discountType": "fixed",
+      "appliesTo": "monitors",
+      "minSavings": 150,
+      "maxSavings": 500,
+      "badge": "Black Friday Deal",
+      "urgencyThresholdHours": 48
+    },
+    {
+      "id": "bf24-bundle-bonus",
+      "name": "Era Bundle Bonus",
+      "description": "Save an additional 5% when you bundle 2+ items from your era",
+      "discountType": "percentage",
+      "discountValue": 5,
+      "appliesTo": "bundles",
+      "badge": "Bundle Savings",
+      "minItems": 2
+    }
+  ]
+}

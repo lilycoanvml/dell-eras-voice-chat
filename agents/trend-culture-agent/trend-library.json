@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "culturalMoments": [
+    {
+      "id": "era-language",
+      "name": "Era as Identity Marker",
+      "description": "The cultural normalization of personal 'eras' as chapter markers. People talk about 'entering a new era', 'leaving my old era behind', 'this is my ___ era'.",
+      "platforms": ["TikTok", "Twitter/X", "LinkedIn"],
+      "relevantEras": ["all"],
+      "examplePhrases": ["this is my villain era", "in my healing era", "entering my success era"]
+    },
+    {
+      "id": "creator-professionalism",
+      "name": "Creator as Profession",
+      "description": "Being a 'creator' has shifted from describing a hobby to describing a career. LinkedIn profiles now list 'Content Creator' as a job title.",
+      "platforms": ["LinkedIn", "Instagram", "TikTok", "YouTube"],
+      "relevantEras": ["creator", "performer"],
+      "languageShift": "'Creator' is now professional identity, not a side hustle description."
+    },
+    {
+      "id": "founder-mode-2024",
+      "name": "Founder Mode",
+      "description": "The 2024 cultural emergence of 'founder mode' — ambitious professionals who think like founders even inside larger organizations.",
+      "source": "Paul Graham essay (2024)",
+      "relevantEras": ["visionary", "innovator", "achiever"],
+      "languageSignals": ["founder mode", "operator", "builder mindset"]
+    },
+    {
+      "id": "anti-hustle-swing",
+      "name": "Anti-Hustle Balance",
+      "description": "The pendulum has swung toward intentional work and lifestyle design. 'Hard work' is less aspirational; 'smart work from anywhere' is more resonant.",
+      "relevantEras": ["explorer", "creator"],
+      "languageSignals": ["intentional", "aligned", "designed", "on my terms"]
+    }
+  ],
+  "vocabularyTrends": {
+    "rising": ["era", "chapter", "becoming", "craft", "momentum", "alignment", "operator", "builder", "shift"],
+    "declining": ["hustle", "grind", "synergy", "leverage", "solution", "professional", "enterprise"],
+    "generational": {
+      "gen-z": ["lowkey", "era", "ngl", "understood"],
+      "millennials": ["chapter", "next level", "building something", "making moves"],
+      "gen-x": ["serious about", "ready to", "time to", "after all this time"]
+    }
+  }
+}

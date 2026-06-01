@@ -1,0 +1,77 @@
+{
+  "version": "1.0.0",
+  "eras": [
+    {
+      "id": "creator",
+      "name": "The Creator Era",
+      "shortName": "Creator",
+      "tagline": "Your craft is your currency.",
+      "description": "This era belongs to the makers — the ones who turn blank canvases into worlds. You don't just work; you express. Every output is an extension of who you are.",
+      "primaryColor": "#8B5CF6",
+      "secondaryColor": "#EC4899",
+      "heroProduct": "xps-16-9640",
+      "shareCardBackground": "purple-pink-gradient",
+      "estimatedPrevalence": 0.22
+    },
+    {
+      "id": "innovator",
+      "name": "The Innovator Era",
+      "shortName": "Innovator",
+      "tagline": "You build what others only imagine.",
+      "description": "You see systems where others see chaos. You build solutions before anyone else knows they need them. The compiler is your canvas.",
+      "primaryColor": "#06B6D4",
+      "secondaryColor": "#3B82F6",
+      "heroProduct": "xps-15-9530",
+      "shareCardBackground": "cyan-blue-gradient",
+      "estimatedPrevalence": 0.20
+    },
+    {
+      "id": "achiever",
+      "name": "The Achiever Era",
+      "shortName": "Achiever",
+      "tagline": "Greatness is the only setting you know.",
+      "description": "You move people, results, and organizations forward. You set the agenda. This era belongs to the ones who make things happen at scale.",
+      "primaryColor": "#F59E0B",
+      "secondaryColor": "#DC2626",
+      "heroProduct": "latitude-9550",
+      "shareCardBackground": "amber-red-gradient",
+      "estimatedPrevalence": 0.18
+    },
+    {
+      "id": "explorer",
+      "name": "The Explorer Era",
+      "shortName": "Explorer",
+      "tagline": "The whole world is your workspace.",
+      "description": "Your best ideas arrive somewhere between time zones. You've rejected the idea that work is a place — and you're designing a life that proves it.",
+      "primaryColor": "#10B981",
+      "secondaryColor": "#059669",
+      "heroProduct": "xps-13-9340",
+      "shareCardBackground": "emerald-gradient",
+      "estimatedPrevalence": 0.15
+    },
+    {
+      "id": "visionary",
+      "name": "The Visionary Era",
+      "shortName": "Visionary",
+      "tagline": "You see the future before it arrives.",
+      "description": "You're not here to optimize the existing world — you're here to replace parts of it. This era belongs to founders, reformers, and the obsessively long-term.",
+      "primaryColor": "#7C3AED",
+      "secondaryColor": "#DC2626",
+      "heroProduct": "xps-16-9640",
+      "shareCardBackground": "violet-red-gradient",
+      "estimatedPrevalence": 0.13
+    },
+    {
+      "id": "performer",
+      "name": "The Performer Era",
+      "shortName": "Performer",
+      "tagline": "When you play, the world watches.",
+      "description": "This isn't a hobby — it's a craft, a career, a community. You perform at a level most people never reach, and your setup needs to match that standard.",
+      "primaryColor": "#EF4444",
+      "secondaryColor": "#F97316",
+      "heroProduct": "alienware-m18-r2",
+      "shareCardBackground": "red-orange-gradient",
+      "estimatedPrevalence": 0.12
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "version": "1.0.0",
+  "eras": [
+    {
+      "id": "creator",
+      "name": "The Creator Era",
+      "tagline": "Your craft is your currency.",
+      "description": "This era belongs to the makers — the ones who turn blank canvases into worlds. You don't just work; you express. And the tools you work with should be as intentional as your art.",
+      "primaryColor": "#8B5CF6",
+      "secondaryColor": "#EC4899",
+      "archetype": "The Artist / Maker",
+      "motif": "Studio light, late nights, the smell of something being made",
+      "keywords": ["create", "design", "art", "visual", "aesthetic", "make", "express", "beauty", "film", "photo", "video", "content", "brand", "portfolio", "studio", "canvas", "color", "typography", "illustration"],
+      "coreTraits": ["expressive", "detail-oriented", "independent", "aesthetic-driven"],
+      "successDefinition": "Work that makes people feel something",
+      "dellNarrative": "Dell tools that render your vision faithfully — from first concept to final export."
+    },
+    {
+      "id": "innovator",
+      "name": "The Innovator Era",
+      "tagline": "You build what others only imagine.",
+      "description": "You see systems where others see problems, and you build solutions before anyone else knows they need them. This era belongs to the engineers of possibility.",
+      "primaryColor": "#06B6D4",
+      "secondaryColor": "#3B82F6",
+      "archetype": "The Builder / Engineer",
+      "motif": "Terminal windows open at midnight, the satisfaction of a passing test",
+      "keywords": ["code", "develop", "engineer", "build", "software", "data", "tech", "system", "stack", "api", "app", "product", "deploy", "ml", "ai", "open source", "infrastructure"],
+      "coreTraits": ["analytical", "systematic", "curious", "persistent"],
+      "successDefinition": "Shipping something that works, that scales, that matters",
+      "dellNarrative": "Developer-ready performance for the problems worth solving."
+    },
+    {
+      "id": "achiever",
+      "name": "The Achiever Era",
+      "tagline": "Greatness is the only setting you know.",
+      "description": "You move people, results, and organizations forward. You don't just sit at the table — you set the agenda. This era belongs to the ones who make things happen at scale.",
+      "primaryColor": "#F59E0B",
+      "secondaryColor": "#DC2626",
+      "archetype": "The Leader / Operator",
+      "motif": "Boardrooms, momentum, the satisfaction of a quarter that exceeds",
+      "keywords": ["lead", "team", "manage", "grow", "scale", "strategy", "business", "impact", "revenue", "goal", "performance", "executive", "director"],
+      "coreTraits": ["strategic", "decisive", "results-driven", "people-smart"],
+      "successDefinition": "Building a team that can win without you in the room",
+      "dellNarrative": "Business-grade reliability for the decisions that cost more than a laptop."
+    },
+    {
+      "id": "explorer",
+      "name": "The Explorer Era",
+      "tagline": "The whole world is your workspace.",
+      "description": "Your best ideas arrive somewhere between time zones. You've rejected the idea that work is a place — and now you're designing a life that proves it. This era belongs to the untethered.",
+      "primaryColor": "#10B981",
+      "secondaryColor": "#059669",
+      "archetype": "The Nomad / Remote Worker",
+      "motif": "Ocean views, coffee shops at sunrise, video calls that could be anywhere",
+      "keywords": ["travel", "remote", "flexible", "freedom", "move", "adventure", "anywhere", "nomad", "location", "balance", "lifestyle", "abroad"],
+      "coreTraits": ["adaptable", "independent", "curious", "minimalist"],
+      "successDefinition": "Full freedom to work from anywhere, without sacrificing quality",
+      "dellNarrative": "Ultraportable, always connected, built for the road."
+    },
+    {
+      "id": "visionary",
+      "name": "The Visionary Era",
+      "tagline": "You see the future before it arrives.",
+      "description": "You're not here to optimize the existing world — you're here to replace parts of it. This era belongs to founders, reformers, and the obsessively long-term.",
+      "primaryColor": "#7C3AED",
+      "secondaryColor": "#DC2626",
+      "archetype": "The Founder / Entrepreneur",
+      "motif": "Whiteboards, investor calls, the quiet before the launch",
+      "keywords": ["launch", "company", "disrupt", "change", "vision", "founder", "mission", "startup", "legacy", "impact", "billion", "category", "movement", "transform"],
+      "coreTraits": ["ambitious", "risk-tolerant", "long-term", "persuasive"],
+      "successDefinition": "Building something that outlasts you",
+      "dellNarrative": "The performance setup for ideas that don't fit in a box."
+    },
+    {
+      "id": "performer",
+      "name": "The Performer Era",
+      "tagline": "When you play, the world watches.",
+      "description": "This isn't a hobby. This is a craft, a career, and a community. You perform at a level most people never reach — and your setup needs to match that standard.",
+      "primaryColor": "#EF4444",
+      "secondaryColor": "#F97316",
+      "archetype": "The Gamer / Streamer / Entertainer",
+      "motif": "RGB glow, live chat scrolling, the clutch play that made the clip",
+      "keywords": ["game", "stream", "compete", "perform", "entertain", "audience", "live", "twitch", "youtube", "gaming", "fps", "rank", "esport", "broadcast"],
+      "coreTraits": ["competitive", "performance-obsessed", "community-minded", "entertaining"],
+      "successDefinition": "Winning — and having an audience watching when you do",
+      "dellNarrative": "Alienware-grade performance for the moments that count."
+    }
+  ]
+}

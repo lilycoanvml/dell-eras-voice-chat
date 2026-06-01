@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "kpis": [
+    {
+      "id": "completion_rate",
+      "name": "Conversation Completion Rate",
+      "description": "% of sessions that reach the era reveal",
+      "target": 0.65,
+      "warningThreshold": 0.50,
+      "criticalThreshold": 0.35,
+      "unit": "percentage"
+    },
+    {
+      "id": "avg_answer_length",
+      "name": "Average Answer Length",
+      "description": "Average word count across all 5 answers",
+      "target": 20,
+      "warningThreshold": 12,
+      "criticalThreshold": 6,
+      "unit": "words"
+    },
+    {
+      "id": "era_reveal_engagement",
+      "name": "Era Reveal Scroll Depth",
+      "description": "% of era reveals where user scrolls to product cards",
+      "target": 0.80,
+      "warningThreshold": 0.60,
+      "criticalThreshold": 0.40,
+      "unit": "percentage"
+    },
+    {
+      "id": "product_ctr",
+      "name": "Product Click-Through Rate",
+      "description": "% of era reveals where user clicks at least one product",
+      "target": 0.30,
+      "warningThreshold": 0.20,
+      "criticalThreshold": 0.10,
+      "unit": "percentage"
+    },
+    {
+      "id": "session_duration",
+      "name": "Average Session Duration",
+      "description": "Time from first message to era reveal",
+      "target": 240,
+      "warningThreshold": 120,
+      "criticalThreshold": 60,
+      "unit": "seconds"
+    }
+  ]
+}

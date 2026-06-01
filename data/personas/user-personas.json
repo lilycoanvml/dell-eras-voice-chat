@@ -1,0 +1,57 @@
+{
+  "version": "1.0.0",
+  "personas": [
+    {
+      "id": "creative-professional",
+      "name": "Maya",
+      "age": 28,
+      "role": "Freelance designer + content creator",
+      "era": "creator",
+      "quote": "I need my tools to keep up with my vision.",
+      "painPoints": ["Slow render times", "Color inaccuracy", "Too much gear to carry"],
+      "motivators": ["Aesthetic quality", "Expressing identity through work", "Building an audience"],
+      "typicalAnswer_q1": "I want to finally launch my personal brand. I've been designing for other people for years.",
+      "typicalAnswer_q5": "Success is someone telling me my work changed how they see something.",
+      "likelyProducts": ["xps-16-9640", "ultrasharp-27-4k", "dell-canvas-27"]
+    },
+    {
+      "id": "startup-engineer",
+      "name": "Kai",
+      "age": 31,
+      "role": "Senior software engineer, early-stage startup",
+      "era": "innovator",
+      "quote": "I want to build things that actually matter.",
+      "painPoints": ["Compile time", "Memory constraints when running local models", "Unstable dev environments"],
+      "motivators": ["Technical elegance", "Shipping fast", "Working on hard problems"],
+      "typicalAnswer_q1": "I'm building an AI tool for developers. We're in early beta and I want to hit our v1 launch.",
+      "typicalAnswer_q5": "When the product is used by thousands of people who rely on it.",
+      "likelyProducts": ["xps-15-9530", "ultrasharp-32-4k-usbc", "thunderbolt-dock-wd22tb4"]
+    },
+    {
+      "id": "corporate-leader",
+      "name": "Jordan",
+      "age": 42,
+      "role": "VP of Marketing, Fortune 500",
+      "era": "achiever",
+      "quote": "I need everything to work, every time.",
+      "painPoints": ["Security vulnerabilities", "Battery dying in meetings", "Juggling too many devices"],
+      "motivators": ["Efficiency", "Professional image", "Team performance"],
+      "typicalAnswer_q1": "I want to double our team's output without doubling headcount.",
+      "typicalAnswer_q5": "My team getting promoted. That's when I know I've done my job.",
+      "likelyProducts": ["latitude-9550", "dell-40-curved", "thunderbolt-dock-wd22tb4"]
+    },
+    {
+      "id": "digital-nomad",
+      "name": "Alex",
+      "age": 34,
+      "role": "UX researcher, fully remote",
+      "era": "explorer",
+      "quote": "My office is wherever I open my laptop.",
+      "painPoints": ["Heavy laptop", "Poor battery life", "Finding reliable wifi"],
+      "motivators": ["Freedom and flexibility", "New experiences", "Work-life integration"],
+      "typicalAnswer_q1": "I want to work from 5 different countries this year without compromising my client work.",
+      "typicalAnswer_q5": "Opening my laptop in a new city and everything just works.",
+      "likelyProducts": ["xps-13-9340", "pro-wireless-headset-wl5022", "power-companion-pw7018lc"]
+    }
+  ]
+}

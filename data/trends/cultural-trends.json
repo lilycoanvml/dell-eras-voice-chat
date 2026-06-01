@@ -1,0 +1,38 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2024-11-01",
+  "macroTrends": [
+    {
+      "id": "creator-economy",
+      "name": "Creator Economy Maturation",
+      "description": "More people than ever are monetizing creative skills directly. 'Creator' has become a professional identity, not a hobby.",
+      "relevantEras": ["creator", "performer"],
+      "peakYear": 2024,
+      "languageSignals": ["creator", "audience", "monetize", "brand", "content"]
+    },
+    {
+      "id": "ai-native-workforce",
+      "name": "AI-Native Work",
+      "description": "Workers increasingly expect AI assistance in every task. Developers and builders are among the first wave.",
+      "relevantEras": ["innovator", "visionary"],
+      "peakYear": 2024,
+      "languageSignals": ["ai", "llm", "automate", "workflow", "copilot"]
+    },
+    {
+      "id": "remote-permanence",
+      "name": "Remote Work Permanence",
+      "description": "The return-to-office push has settled into a new normal: hybrid for most, fully remote for many knowledge workers.",
+      "relevantEras": ["explorer", "achiever"],
+      "peakYear": 2023,
+      "languageSignals": ["remote", "hybrid", "home office", "async", "flexibility"]
+    },
+    {
+      "id": "founder-mode",
+      "name": "Founder Mode",
+      "description": "The rise of 'founder mode' thinking: ambitious professionals increasingly identify as micro-entrepreneurs even within companies.",
+      "relevantEras": ["visionary", "achiever"],
+      "peakYear": 2024,
+      "languageSignals": ["founder", "operator", "build", "launch", "scale"]
+    }
+  ]
+}

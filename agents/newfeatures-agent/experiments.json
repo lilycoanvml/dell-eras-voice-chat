@@ -1,0 +1,45 @@
+{
+  "version": "1.0.0",
+  "experiments": [
+    {
+      "id": "exp-001",
+      "name": "Era Blend Mode",
+      "hypothesis": "Users who identify as 'Creator + Innovator' hybrids will have higher product click-through if we acknowledge the blend",
+      "status": "proposed",
+      "priority": "high",
+      "successMetric": "product_ctr",
+      "successThreshold": 0.35,
+      "minSessions": 200
+    },
+    {
+      "id": "exp-002",
+      "name": "Share Card Viral Loop",
+      "hypothesis": "Adding an Instagram-optimized era share card will increase organic traffic by 15%+",
+      "status": "proposed",
+      "priority": "high",
+      "successMetric": "organic_sessions_from_share",
+      "successThreshold": 0.15,
+      "minSessions": 500
+    },
+    {
+      "id": "exp-003",
+      "name": "Question Order Optimization",
+      "hypothesis": "Leading with the aspirational question (Q5 style) as Q1 will increase answer length by 30%",
+      "status": "in_review",
+      "priority": "medium",
+      "successMetric": "avg_answer_words",
+      "successThreshold": 20,
+      "minSessions": 100
+    },
+    {
+      "id": "exp-004",
+      "name": "Email Gate for Era Profile",
+      "hypothesis": "Offering a saved era profile card (PDF/email) after reveal will convert 20%+ to email capture",
+      "status": "proposed",
+      "priority": "medium",
+      "successMetric": "email_capture_rate",
+      "successThreshold": 0.20,
+      "minSessions": 300
+    }
+  ]
+}
