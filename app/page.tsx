@@ -231,7 +231,7 @@ function LandingScreen({ mood, onToggleMood, onStart }: {
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
           <button className="era-mood-toggle" onClick={onToggleMood}>
             <div className="era-mood-dot" />
-            <span>{mood === 'sage' ? 'Sage' : 'Sand'}</span>
+            <span>{mood === 'sage' ? 'Light' : 'Dark'}</span>
           </button>
           <div className="era-bf-tag"><div className="era-bf-dot" />Up to 35% off</div>
         </div>
@@ -701,7 +701,7 @@ function ShareScreen({ eraReveal, onRestart, onBack }: {
         <div
           className="share-card-outer"
           style={{
-            background: `linear-gradient(155deg, ${era.primaryColor} 0%, ${era.secondaryColor} 48%, #1a1412 130%)`,
+            background: `linear-gradient(155deg, ${era.primaryColor} 0%, ${era.secondaryColor} 48%, #0C1A2E 130%)`,
             boxShadow: `0 24px 60px ${era.primaryColor}55`,
           }}
         >
