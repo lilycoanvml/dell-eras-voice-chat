@@ -1324,16 +1324,14 @@ export default function EraApp() {
               <div className="ask-ali-hint-note">
                 Right here whenever<br />you need me <span style={{ fontSize: 18 }}>✦</span>
               </div>
-              <svg className="ask-ali-hint-arrow" width="92" height="72" viewBox="0 0 92 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                  <marker id="askAliArrowHead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
-                    <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
-                  </marker>
-                </defs>
+              <svg className="ask-ali-hint-arrow" width="24" height="56" viewBox="0 0 24 56" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
-                  d="M8 10 C 36 10, 70 24, 78 62"
+                  d="M12 4 L 12 46"
                   stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" fill="none"
-                  markerEnd="url(#askAliArrowHead)"
+                />
+                <path
+                  d="M4 38 L 12 50 L 20 38"
+                  stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none"
                 />
               </svg>
             </div>
