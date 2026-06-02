@@ -5,7 +5,7 @@ import { useChat } from '@/app/frontend/hooks/useChat';
 import type { EraRevealPayload } from '@/app/frontend/hooks/useChat';
 
 // ─── TYPES ───────────────────────────────────────────────────────────────────
-type Screen = 'landing' | 'chat' | 'reveal' | 'recs' | 'share';
+type Screen = 'landing' | 'intro' | 'chat' | 'reveal' | 'recs' | 'share';
 
 // ─── LOOKUP TABLES ───────────────────────────────────────────────────────────
 // Product images/URLs keyed by the exact names the API system prompt uses
@@ -230,6 +230,49 @@ function Waveform() {
           }} />
         );
       })}
+    </div>
+  );
+}
+
+// ─── INTRO SCREEN ────────────────────────────────────────────────────────────
+const INTRO_SPEECH = "Hey — I'm Ali. I'm here to help you discover your next era through Dell. Just tell me a little about yourself, and I'll match you with tech that actually fits who you're becoming.";
+
+function IntroScreen({ onDone }: { onDone: () => void }) {
+  const [exiting, setExiting] = useState(false);
+
+  useEffect(() => {
+    // Wait for orb entrance animation, then speak
+    const t = setTimeout(() => {
+      speak(INTRO_SPEECH, () => {
+        setExiting(true);
+        setTimeout(onDone, 520);
+      });
+    }, 1000);
+    return () => clearTimeout(t);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return (
+    <div className={`intro-screen${exiting ? ' exiting' : ''}`}>
+      {/* Pulsing rings */}
+      <div className="intro-ring intro-ring-1" />
+      <div className="intro-ring intro-ring-2" />
+      <div className="intro-ring intro-ring-3" />
+
+      {/* Orbiting dots */}
+      <div className="intro-dot intro-dot-1" />
+      <div className="intro-dot intro-dot-2" />
+
+      {/* Main orb */}
+      <div className="intro-orb-wrap">
+        <AliOrb size={220} state="speaking" />
+      </div>
+
+      {/* Text */}
+      <div className="intro-text-area">
+        <div className="intro-greeting">Hi, I&apos;m <em>Ali</em></div>
+        <div className="intro-tagline">Your guide to the next era</div>
+      </div>
     </div>
   );
 }
@@ -912,7 +955,10 @@ export default function EraApp() {
     <div id="era-app">
       <div key={screen} style={{ position: 'absolute', inset: 0 }}>
         {screen === 'landing' && (
-          <LandingScreen mood={mood} onToggleMood={toggleMood} onStart={() => go('chat')} />
+          <LandingScreen mood={mood} onToggleMood={toggleMood} onStart={() => go('intro')} />
+        )}
+        {screen === 'intro' && (
+          <IntroScreen onDone={() => go('chat')} />
         )}
         {screen === 'chat' && (
           <ChatScreen
