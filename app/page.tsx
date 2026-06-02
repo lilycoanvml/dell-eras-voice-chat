@@ -1210,8 +1210,10 @@ export default function EraApp() {
   const [flowKey,    setFlowKey]    = useState(0);
   const [eraReveal,  setEraReveal]  = useState<EraRevealPayload | null>(null);
   const [discoveryCtx, setDiscoveryCtx] = useState<{ userName?: string; summary?: string } | null>(null);
-  const [askAliOpen, setAskAliOpen] = useState(false);
-  const [mood,       setMood]       = useState('sage');
+  const [askAliOpen,    setAskAliOpen]    = useState(false);
+  const [hintShown,     setHintShown]     = useState(false); // has Ali introduced Ask Ali yet?
+  const [showHint,      setShowHint]      = useState(false); // is the arrow + label currently visible?
+  const [mood,          setMood]          = useState('sage');
 
   useEffect(() => {
     const saved = localStorage.getItem('era-mood') || 'sage';
@@ -1241,8 +1243,36 @@ export default function EraApp() {
     setEraReveal(null);
     setDiscoveryCtx(null);
     setAskAliOpen(false);
+    setHintShown(false);
+    setShowHint(false);
     go('landing');
   };
+
+  // First time the user lands on the Recs screen, Ali introduces the Ask Ali
+  // button with a spoken line + an arrow that points to the floating pill.
+  useEffect(() => {
+    if (screen !== 'recs' || hintShown || !eraReveal) return;
+    setHintShown(true);
+
+    const intro = discoveryCtx?.userName
+      ? `Oh — and ${discoveryCtx.userName}, if you have any questions about your era or the gear I picked out, just tap Ask Ali. I'll be right here.`
+      : `Oh — and if you have any questions about your era or the gear I picked out, just tap Ask Ali. I'll be right here.`;
+
+    // Let the recs screen settle before Ali speaks
+    const introTimer = setTimeout(() => {
+      setShowHint(true);
+      speak(intro, () => {
+        // Keep the hint visible for a moment after speech ends, then fade
+        setTimeout(() => setShowHint(false), 4000);
+      });
+    }, 1400);
+
+    return () => clearTimeout(introTimer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [screen, eraReveal]);
+
+  // Dismiss the hint instantly if user opens the panel
+  useEffect(() => { if (askAliOpen) setShowHint(false); }, [askAliOpen]);
 
   // Extract name and discovery summary from the chat history
   const handleChatComplete = (reveal: EraRevealPayload, msgs: { role: 'user' | 'assistant'; content: string }[]) => {
@@ -1287,10 +1317,28 @@ export default function EraApp() {
 
       {/* Persistent "Ask Ali" floating button on recs and share screens */}
       {eraReveal && (screen === 'recs' || screen === 'share') && !askAliOpen && (
-        <button className="ask-ali-fab" onClick={() => setAskAliOpen(true)} aria-label="Ask Ali">
-          <AliOrb size={36} state="idle" />
-          <span className="ask-ali-fab-label">Ask Ali</span>
-        </button>
+        <>
+          {/* First-time hint pointing at the Ask Ali pill */}
+          {showHint && (
+            <div className="ask-ali-hint">
+              <div className="ask-ali-hint-note">
+                Right here whenever<br />you need me <span style={{ fontSize: 18 }}>✦</span>
+              </div>
+              <svg className="ask-ali-hint-arrow" width="84" height="68" viewBox="0 0 84 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 8 C 30 8, 64 18, 70 56" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" fill="none" strokeDasharray="0" />
+                <path d="M62 50 L 72 58 L 64 65" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+              </svg>
+            </div>
+          )}
+          <button
+            className={`ask-ali-fab${showHint ? ' pulsing' : ''}`}
+            onClick={() => setAskAliOpen(true)}
+            aria-label="Ask Ali"
+          >
+            <AliOrb size={36} state={showHint ? 'speaking' : 'idle'} />
+            <span className="ask-ali-fab-label">Ask Ali</span>
+          </button>
+        </>
       )}
 
       {askAliOpen && eraReveal && (
