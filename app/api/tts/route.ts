@@ -16,8 +16,7 @@ export async function POST(req: NextRequest) {
       },
       audioConfig: {
         audioEncoding: 'MP3',
-        speakingRate: 1.1,   // slightly faster = more energetic
-        pitch: 2.0,          // a touch higher = warmer, less robotic
+        speakingRate: 1.08,
         volumeGainDb: 1.0,
       },
     });
