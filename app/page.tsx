@@ -358,7 +358,7 @@ function LandingScreen({ mood, onToggleMood, onStart }: {
 
 // ─── CHAT SCREEN ─────────────────────────────────────────────────────────────
 function ChatScreen({ onComplete, onBack }: {
-  onComplete: (era: EraRevealPayload) => void;
+  onComplete: (era: EraRevealPayload, discoveryMsgs: { role: 'user' | 'assistant'; content: string }[]) => void;
   onBack: () => void;
 }) {
   const { messages, state, eraReveal, error, sendMessage, startConversation } = useChat();
@@ -409,7 +409,7 @@ function ChatScreen({ onComplete, onBack }: {
     if (!eraReveal) return;
     const msg = sanitizeClosingMsg(eraReveal.closingMessage);
     setClosingMsg(msg);
-    speak(msg, () => onComplete(eraReveal));
+    speak(msg, () => onComplete(eraReveal, messages.map(m => ({ role: m.role, content: m.content }))));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eraReveal]);
 
@@ -983,11 +983,233 @@ function ShareScreen({ eraReveal, onRestart, onBack }: {
   );
 }
 
+// ─── ASK ALI PANEL ───────────────────────────────────────────────────────────
+type AskMsg = { id: number; role: 'user' | 'assistant'; content: string };
+
+function AskAliPanel({ eraReveal, userName, discoverySummary, onClose }: {
+  eraReveal: EraRevealPayload;
+  userName?: string;
+  discoverySummary?: string;
+  onClose: () => void;
+}) {
+  const { era, products } = eraReveal;
+  const [msgs,       setMsgs]       = useState<AskMsg[]>([]);
+  const [loading,    setLoading]    = useState(false);
+  const [textInput,  setTextInput]  = useState('');
+  const [mode,       setMode]       = useState<'voice' | 'text'>('text');
+  const [isListening, setIsListening] = useState(false);
+  const [isSpeaking,  setIsSpeaking] = useState(false);
+  const [interim,    setInterim]    = useState('');
+  const scrollRef    = useRef<HTMLDivElement>(null);
+  const recRef       = useRef<EventTarget & { start(): void; stop(): void } | null>(null);
+  const nextId       = useRef(0);
+
+  // Friendly opener — different vibe from intro because the era is already revealed
+  useEffect(() => {
+    const opener = userName
+      ? `Hey ${userName} — I'm here if you want to dig into your setup. Specs, comparisons, what each piece is best for. What's on your mind?`
+      : `Hey — I'm sticking around in case you have questions about your setup. Specs, comparisons, what each piece does best. Ask away.`;
+    setMsgs([{ id: nextId.current++, role: 'assistant', content: opener }]);
+    setIsSpeaking(true);
+    speak(opener, () => setIsSpeaking(false));
+    return () => {
+      window.speechSynthesis?.cancel();
+      if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+      recRef.current?.stop();
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = scrollRef.current.scrollHeight + 400;
+  }, [msgs, loading, interim]);
+
+  const send = async (text: string) => {
+    if (!text.trim() || loading) return;
+    const userMsg = { id: nextId.current++, role: 'user' as const, content: text.trim() };
+    const next    = [...msgs, userMsg];
+    setMsgs(next);
+    setTextInput('');
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/ask-ali', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          messages: next.map(m => ({ role: m.role, content: m.content })),
+          context: {
+            userName,
+            eraName: era.name,
+            eraTagline: era.tagline,
+            eraDescription: era.description,
+            discoverySummary,
+            products: products.map(p => ({
+              name: p.name,
+              category: p.category,
+              price: p.price,
+              originalPrice: p.originalPrice,
+              savings: p.savings,
+              description: p.description,
+              productUrl: getAsset(p.name)?.productUrl,
+            })),
+          },
+        }),
+      });
+      const data = await res.json();
+      const reply = data.content || data.error || "Hmm — try asking that again?";
+      const aliMsg = { id: nextId.current++, role: 'assistant' as const, content: reply };
+      setMsgs(m => [...m, aliMsg]);
+      setIsSpeaking(true);
+      speak(reply, () => setIsSpeaking(false));
+    } catch {
+      setMsgs(m => [...m, { id: nextId.current++, role: 'assistant', content: "Something glitched. Try again?" }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const startVoice = () => {
+    if (isListening || loading) return;
+    const SRA = (window as typeof window & { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown }).SpeechRecognition
+             || (window as typeof window & { webkitSpeechRecognition?: unknown }).webkitSpeechRecognition;
+    if (!SRA) return;
+    window.speechSynthesis?.cancel();
+    if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const rec = new (SRA as any)();
+    rec.continuous = true; rec.interimResults = true; rec.lang = 'en-US';
+    let finalText = '';
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    const setTimer = (ms: number) => { if (timer) clearTimeout(timer); timer = setTimeout(() => rec.stop(), ms); };
+
+    rec.onstart = () => setIsListening(true);
+    rec.onspeechstart = () => setTimer(2500);
+    rec.onresult = (e: { resultIndex: number; results: SpeechRecognitionResultList }) => {
+      let int = '';
+      for (let i = e.resultIndex; i < e.results.length; i++) {
+        if (e.results[i].isFinal) finalText += e.results[i][0].transcript;
+        else int += e.results[i][0].transcript;
+      }
+      setInterim(finalText || int);
+      setTimer(2500);
+    };
+    rec.onspeechend = () => setTimer(2500);
+    rec.onend = () => { if (timer) clearTimeout(timer); setIsListening(false); setInterim(''); if (finalText.trim()) send(finalText.trim()); };
+    rec.onerror = () => { if (timer) clearTimeout(timer); setIsListening(false); setInterim(''); };
+    recRef.current = rec;
+    rec.start();
+    setTimer(12000);
+  };
+
+  return (
+    <div className="ask-ali-overlay" onClick={onClose}>
+      <div className="ask-ali-panel" onClick={e => e.stopPropagation()}>
+        {/* Header */}
+        <div className="ask-ali-header">
+          <AliOrb size={36} state={isSpeaking ? 'speaking' : isListening ? 'listening' : loading ? 'thinking' : 'idle'} />
+          <div style={{ flex: 1 }}>
+            <div className="chat-ali-label">Ali</div>
+            <div className="chat-ali-sub">
+              {loading ? 'Thinking…' : isListening ? 'Listening…' : isSpeaking ? 'Speaking…' : 'Ask about your setup'}
+            </div>
+          </div>
+          <button className="era-icon-btn" onClick={onClose} aria-label="Close">
+            <svg width={14} height={14} viewBox="0 0 14 14" fill="none">
+              <path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div ref={scrollRef} className="ask-ali-messages">
+          {msgs.map(m => (
+            <div key={m.id} className={`chat-bubble-wrap ${m.role === 'assistant' ? 'ali' : 'user'}`}>
+              <div className={`chat-bubble ${m.role === 'assistant' ? 'ali' : 'user'}`}>{m.content}</div>
+            </div>
+          ))}
+          {isListening && interim && (
+            <div className="chat-bubble-wrap user" style={{ opacity: 0.55 }}>
+              <div className="chat-bubble user">{interim}</div>
+            </div>
+          )}
+          {loading && (
+            <div className="chat-thinking">
+              {[0, 1, 2].map(i => (
+                <div key={i} className="chat-thinking-dot" style={{ animation: `blink 1.2s ${i * 0.18}s ease-in-out infinite` }} />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Input */}
+        <div className="ask-ali-dock">
+          <div className="input-mode-toggle">
+            <button
+              className={`input-mode-btn${mode === 'voice' ? ' active' : ''}`}
+              onClick={() => setMode('voice')}
+              disabled={loading || isListening}
+            >
+              <MicIcon size={14} color="currentColor" /> Voice
+            </button>
+            <button
+              className={`input-mode-btn${mode === 'text' ? ' active' : ''}`}
+              onClick={() => { setMode('text'); recRef.current?.stop(); }}
+              disabled={loading}
+            >
+              <KeyboardIcon size={14} color="currentColor" /> Type
+            </button>
+          </div>
+
+          {mode === 'text' ? (
+            <div className="chat-text-input">
+              <input
+                value={textInput}
+                onChange={e => setTextInput(e.target.value)}
+                onKeyDown={e => e.key === 'Enter' && send(textInput)}
+                placeholder={loading ? 'Ali is thinking…' : 'Ask about your setup…'}
+                disabled={loading}
+                autoFocus
+              />
+              <button onClick={() => send(textInput)} disabled={!textInput.trim() || loading} aria-label="Send">
+                <SendIcon size={18} color="#fff" />
+              </button>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+              <button
+                onClick={isListening ? () => recRef.current?.stop() : startVoice}
+                disabled={loading || isSpeaking}
+                aria-label={isListening ? 'Stop listening' : 'Start speaking'}
+                style={{
+                  width: 62, height: 62, borderRadius: '50%', border: 'none',
+                  background: isListening ? 'var(--accent)' : 'var(--ink)', color: '#fff',
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: !isListening ? '0 6px 20px var(--shadow)' : 'none',
+                  transition: 'all 0.3s', opacity: loading || isSpeaking ? 0.5 : 1,
+                }}
+              >
+                <MicIcon size={24} color="#fff" />
+              </button>
+              <div className="chat-dock-hint">
+                {isListening ? 'Listening… tap to stop' : isSpeaking ? 'Ali is talking…' : 'Tap to speak'}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // ─── ROOT ────────────────────────────────────────────────────────────────────
 export default function EraApp() {
   const [screen,     setScreen]     = useState<Screen>('landing');
   const [flowKey,    setFlowKey]    = useState(0);
   const [eraReveal,  setEraReveal]  = useState<EraRevealPayload | null>(null);
+  const [discoveryCtx, setDiscoveryCtx] = useState<{ userName?: string; summary?: string } | null>(null);
+  const [askAliOpen, setAskAliOpen] = useState(false);
   const [mood,       setMood]       = useState('sage');
 
   useEffect(() => {
@@ -1016,7 +1238,23 @@ export default function EraApp() {
     }
     setFlowKey(k => k + 1);
     setEraReveal(null);
+    setDiscoveryCtx(null);
+    setAskAliOpen(false);
     go('landing');
+  };
+
+  // Extract name and discovery summary from the chat history
+  const handleChatComplete = (reveal: EraRevealPayload, msgs: { role: 'user' | 'assistant'; content: string }[]) => {
+    const userMsgs = msgs.filter(m => m.role === 'user').slice(1); // drop hidden kickoff
+    // First visible user reply is their name; clean up trailing punctuation/articles
+    const firstReply = userMsgs[0]?.content.trim() || '';
+    const nameMatch = firstReply.match(/(?:^|i'?m |i am |it'?s |this is |call me |my name is )?([A-Za-z][A-Za-z\-']{1,24})/i);
+    const userName = nameMatch ? nameMatch[1].replace(/[.!?,]$/, '') : undefined;
+    // Summarize: skip the name reply, join the rest
+    const summary = userMsgs.slice(1).map((m, i) => `Q${i + 1}: ${m.content}`).join('\n');
+    setDiscoveryCtx({ userName, summary });
+    setEraReveal(reveal);
+    go('reveal');
   };
 
   return (
@@ -1031,7 +1269,7 @@ export default function EraApp() {
         {screen === 'chat' && (
           <ChatScreen
             key={flowKey}
-            onComplete={(reveal) => { setEraReveal(reveal); go('reveal'); }}
+            onComplete={handleChatComplete}
             onBack={() => go('landing')}
           />
         )}
@@ -1045,6 +1283,23 @@ export default function EraApp() {
           <ShareScreen eraReveal={eraReveal} onRestart={restart} onBack={() => go('recs')} />
         )}
       </div>
+
+      {/* Persistent "Ask Ali" floating button on recs and share screens */}
+      {eraReveal && (screen === 'recs' || screen === 'share') && !askAliOpen && (
+        <button className="ask-ali-fab" onClick={() => setAskAliOpen(true)} aria-label="Ask Ali">
+          <AliOrb size={36} state="idle" />
+          <span className="ask-ali-fab-label">Ask Ali</span>
+        </button>
+      )}
+
+      {askAliOpen && eraReveal && (
+        <AskAliPanel
+          eraReveal={eraReveal}
+          userName={discoveryCtx?.userName}
+          discoverySummary={discoveryCtx?.summary}
+          onClose={() => setAskAliOpen(false)}
+        />
+      )}
     </div>
   );
 }
