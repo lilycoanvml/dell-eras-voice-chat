@@ -691,6 +691,62 @@ function ShareScreen({ eraReveal, onRestart, onBack }: {
 }) {
   const { era, products } = eraReveal;
   const shortName = era.name.replace('The ', '').replace(' Era', '');
+  const cardRef   = useRef<HTMLDivElement>(null);
+  const [copied,  setCopied]  = useState(false);
+  const [saving,  setSaving]  = useState(false);
+
+  const captureCard = async () => {
+    if (!cardRef.current) return null;
+    const { default: html2canvas } = await import('html2canvas');
+    return html2canvas(cardRef.current, {
+      scale: 3,
+      useCORS: true,
+      allowTaint: true,
+      backgroundColor: null,
+      logging: false,
+    });
+  };
+
+  const handleStories = async () => {
+    const canvas = await captureCard();
+    if (!canvas) return;
+    canvas.toBlob(async (blob) => {
+      if (!blob) return;
+      const file = new File([blob], `${shortName}-era.png`, { type: 'image/png' });
+      if (navigator.canShare?.({ files: [file] })) {
+        await navigator.share({ files: [file], title: `I'm in my ${shortName} Era` }).catch(() => {});
+      } else {
+        // Desktop fallback: download the image
+        const a = Object.assign(document.createElement('a'), { href: canvas.toDataURL('image/png'), download: `${shortName}-era.png` });
+        a.click();
+      }
+    }, 'image/png');
+  };
+
+  const handleCopy = async () => {
+    const url = window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch {
+      const el = Object.assign(document.createElement('input'), { value: url });
+      document.body.appendChild(el); el.select(); document.execCommand('copy'); document.body.removeChild(el);
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2200);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    const canvas = await captureCard();
+    if (canvas) {
+      const a = Object.assign(document.createElement('a'), {
+        href: canvas.toDataURL('image/png'),
+        download: `my-${shortName.toLowerCase().replace(/\s+/g, '-')}-era.png`,
+      });
+      a.click();
+    }
+    setSaving(false);
+  };
 
   return (
     <div className="era-screen">
@@ -705,6 +761,7 @@ function ShareScreen({ eraReveal, onRestart, onBack }: {
 
       <div className="share-card-area">
         <div
+          ref={cardRef}
           className="share-card-outer"
           style={{
             background: `linear-gradient(155deg, ${era.primaryColor} 0%, ${era.secondaryColor} 48%, #0C1A2E 130%)`,
@@ -758,14 +815,15 @@ function ShareScreen({ eraReveal, onRestart, onBack }: {
       </div>
 
       <div className="share-actions">
-        <button className="share-action-btn share-action-fill">Stories</button>
-        <button
-          className="share-action-btn share-action-outline"
-          onClick={() => navigator.clipboard.writeText('https://dell.com/blackfriday').catch(() => {})}
-        >
-          Copy link
+        <button className="share-action-btn share-action-fill" onClick={handleStories}>
+          Stories
         </button>
-        <button className="share-action-btn share-action-outline">Save</button>
+        <button className="share-action-btn share-action-outline" onClick={handleCopy}>
+          {copied ? 'Copied ✓' : 'Copy link'}
+        </button>
+        <button className="share-action-btn share-action-outline" onClick={handleSave} disabled={saving}>
+          {saving ? '…' : 'Save'}
+        </button>
       </div>
 
       <button className="share-discover" onClick={onRestart}>Discover another era</button>
