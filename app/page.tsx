@@ -107,20 +107,20 @@ function primeVoices() {
 }
 
 // Warm up the TTS endpoint so the first real call isn't slowed by:
-//  - cold Next.js route compilation
+//  - cold Next.js route / Cloud Run container
 //  - GCP TextToSpeechClient first-call init (~500-1500ms)
 //  - TLS handshake to googleapis.com
-let _ttsPrewarmed = false;
+// We fire this on landing AND chat mount — connections go idle quickly.
 async function prewarmTTS() {
-  if (_ttsPrewarmed || typeof window === 'undefined') return;
-  _ttsPrewarmed = true;
+  if (typeof window === 'undefined') return;
   try {
-    await fetch('/api/tts', {
+    fetch('/api/tts', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: 'hi' }),
+      keepalive: true,
     });
-  } catch { /* silent — prewarm is best-effort */ }
+  } catch { /* silent — best-effort */ }
 }
 
 // Web Speech API fallback (used when GCP TTS route is unavailable locally)
@@ -388,6 +388,7 @@ function ChatScreen({ onComplete, onBack }: {
   useEffect(() => {
     if (started.current) return;
     started.current = true;
+    prewarmTTS(); // keep the TTS route warm right before Ali's first reply
     startConversation();
     const SRA = (window as typeof window & { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown }).SpeechRecognition
              || (window as typeof window & { webkitSpeechRecognition?: unknown }).webkitSpeechRecognition;

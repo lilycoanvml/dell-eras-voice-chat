@@ -29,12 +29,15 @@ export async function POST(req: NextRequest) {
       input: { text: spoken },
       voice: {
         languageCode: 'en-US',
-        name: 'en-US-Journey-F',  // Google's most natural conversational female voice
+        // Chirp 3 HD voices render ~3x faster than Journey while still
+        // sounding natural. Aoede = warm, friendly female. Other good
+        // options: 'Kore' (energetic), 'Leda' (calm).
+        name: 'en-US-Chirp3-HD-Aoede',
       },
       audioConfig: {
-        audioEncoding: 'OGG_OPUS',  // ~3x smaller than MP3, faster transfer
-        speakingRate: 1.08,
-        volumeGainDb: 1.0,
+        audioEncoding: 'OGG_OPUS',
+        speakingRate: 1.05,
+        // Chirp 3 HD doesn't support pitch — relies on voice character itself
       },
     });
 

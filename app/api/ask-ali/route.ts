@@ -71,11 +71,17 @@ export async function POST(req: NextRequest) {
       systemInstruction: buildSystemPrompt(context),
     });
 
-    const history = messages.slice(0, -1).map(m => ({
+    // Gemini's startChat requires history to start with a 'user' message.
+    // Drop any leading assistant messages (e.g. the panel's local greeting).
+    const trimmed = [...messages];
+    while (trimmed.length > 0 && trimmed[0].role === 'assistant') trimmed.shift();
+    if (trimmed.length === 0) return NextResponse.json({ error: 'No user message' }, { status: 400 });
+
+    const history = trimmed.slice(0, -1).map(m => ({
       role: m.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: m.content }],
     }));
-    const last = messages[messages.length - 1];
+    const last = trimmed[trimmed.length - 1];
 
     const chat = model.startChat({ history });
     const result = await chat.sendMessage(last.content);
