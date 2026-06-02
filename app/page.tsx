@@ -106,6 +106,23 @@ function primeVoices() {
   window.speechSynthesis.addEventListener('voiceschanged', load);
 }
 
+// Warm up the TTS endpoint so the first real call isn't slowed by:
+//  - cold Next.js route compilation
+//  - GCP TextToSpeechClient first-call init (~500-1500ms)
+//  - TLS handshake to googleapis.com
+let _ttsPrewarmed = false;
+async function prewarmTTS() {
+  if (_ttsPrewarmed || typeof window === 'undefined') return;
+  _ttsPrewarmed = true;
+  try {
+    await fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: 'hi' }),
+    });
+  } catch { /* silent — prewarm is best-effort */ }
+}
+
 // Web Speech API fallback (used when GCP TTS route is unavailable locally)
 function speakFallback(text: string) {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
@@ -152,7 +169,7 @@ async function speak(text: string, onEnd?: () => void) {
     });
     if (!res.ok) throw new Error('TTS unavailable');
     const { audio } = await res.json();
-    currentAudio = new Audio(`data:audio/mp3;base64,${audio}`);
+    currentAudio = new Audio(`data:audio/ogg;base64,${audio}`);
     currentAudio.addEventListener('ended', () => { _onSpeakEnd?.(); if (onEnd) setTimeout(onEnd, 700); }, { once: true });
     await currentAudio.play();
   } catch {
@@ -352,6 +369,9 @@ function ChatScreen({ onComplete, onBack }: {
   const [isSpeaking,  setIsSpeaking]    = useState(false);
   const [textInput,   setTextInput]     = useState('');
   const [inputMode,   setInputMode]     = useState<'voice' | 'text'>('voice');
+  const [userPaused,  setUserPaused]    = useState(false); // true when user manually stopped the mic
+  const userPausedRef = useRef(false);
+  useEffect(() => { userPausedRef.current = userPaused; }, [userPaused]);
   const recognitionRef = useRef<EventTarget & { start(): void; stop(): void } | null>(null);
   const spokenIds      = useRef<Set<string>>(new Set());
   const scrollRef      = useRef<HTMLDivElement>(null);
@@ -381,7 +401,7 @@ function ChatScreen({ onComplete, onBack }: {
     if (!last || last.role !== 'assistant') return;
     if (spokenIds.current.has(last.id)) return;
     spokenIds.current.add(last.id);
-    speak(last.content);
+    speak(last.content, () => maybeAutoListen());
   }, [messages]);
 
   // Handle era reveal
@@ -404,22 +424,24 @@ function ChatScreen({ onComplete, onBack }: {
              || (window as typeof window & { webkitSpeechRecognition?: unknown }).webkitSpeechRecognition;
     if (!SRA) return;
     window.speechSynthesis?.cancel();
+    setUserPaused(false);
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rec = new (SRA as any)();
-    rec.continuous = true;      // keep listening through natural pauses
+    rec.continuous = true;
     rec.interimResults = true;
     rec.lang = 'en-US';
     let final = '';
     let silenceTimer: ReturnType<typeof setTimeout> | null = null;
+    let speechStarted = false;
 
-    // After 2.5s of silence, auto-stop so the user doesn't have to tap again
-    const resetSilenceTimer = () => {
-      if (silenceTimer) clearTimeout(silenceTimer);
-      silenceTimer = setTimeout(() => rec.stop(), 2500);
-    };
+    const stopTimer = () => { if (silenceTimer) { clearTimeout(silenceTimer); silenceTimer = null; } };
+    // Generous timeout before user starts speaking (gives time to think),
+    // tighter once they've started (natural pause = 2.5s = "I'm done")
+    const setTimer = (ms: number) => { stopTimer(); silenceTimer = setTimeout(() => rec.stop(), ms); };
 
     rec.onstart = () => setIsListening(true);
+    rec.onspeechstart = () => { speechStarted = true; setTimer(2500); };
     rec.onresult = (e: { resultIndex: number; results: SpeechRecognitionResultList }) => {
       let interim = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
@@ -427,26 +449,37 @@ function ChatScreen({ onComplete, onBack }: {
         else interim += e.results[i][0].transcript;
       }
       setInterimText(final || interim);
-      resetSilenceTimer(); // restart the silence countdown on every new word
+      if (speechStarted) setTimer(2500); // reset on every new word
     };
-    rec.onspeechend = () => resetSilenceTimer(); // speech paused — start countdown
-    rec.onerror = () => {
-      if (silenceTimer) clearTimeout(silenceTimer);
-      setIsListening(false);
-      setInterimText('');
-    };
+    rec.onspeechend = () => setTimer(2500);
+    rec.onerror = () => { stopTimer(); setIsListening(false); setInterimText(''); };
     rec.onend = () => {
-      if (silenceTimer) clearTimeout(silenceTimer);
+      stopTimer();
       setIsListening(false);
       setInterimText('');
       if (final.trim()) sendMessage(final.trim());
     };
     recognitionRef.current = rec;
     rec.start();
-    resetSilenceTimer(); // start initial timeout in case nothing is said
+    setTimer(15000); // 15s grace before any speech detected — plenty of time to think
   };
 
-  const stopListening = () => recognitionRef.current?.stop();
+  // User manually pauses → don't auto-resume after Ali's next message
+  const stopListening = () => {
+    setUserPaused(true);
+    recognitionRef.current?.stop();
+  };
+
+  // Auto-listen after Ali finishes speaking (unless user manually paused or typing)
+  const maybeAutoListen = () => {
+    if (userPausedRef.current) return;
+    if (inputMode !== 'voice') return;
+    if (!hasSpeech) return;
+    // small delay so the mic doesn't catch the tail of Ali's audio
+    setTimeout(() => {
+      if (!userPausedRef.current && inputMode === 'voice') startListening();
+    }, 250);
+  };
 
   const handleTextSend = () => {
     if (!textInput.trim() || state !== 'idle') return;
@@ -456,7 +489,8 @@ function ChatScreen({ onComplete, onBack }: {
 
   // Hide the auto-generated kickoff user message (index 0)
   const visibleMsgs = messages.filter((m, i) => !(m.role === 'user' && i === 0));
-  const progressCount = messages.filter(m => m.role === 'user').length;
+  // Subtract 1 to exclude the hidden kickoff message; 5 dots = name + 4 questions
+  const progressCount = Math.max(0, messages.filter(m => m.role === 'user').length - 1);
   const isBusy = state === 'loading' || state === 'era_revealed';
 
   return (
@@ -537,7 +571,7 @@ function ChatScreen({ onComplete, onBack }: {
           <div className="input-mode-toggle">
             <button
               className={`input-mode-btn${inputMode === 'voice' ? ' active' : ''}`}
-              onClick={() => { setInputMode('voice'); }}
+              onClick={() => { setInputMode('voice'); setUserPaused(false); }}
               disabled={isBusy || isListening}
               aria-label="Use voice"
             >
@@ -581,13 +615,17 @@ function ChatScreen({ onComplete, onBack }: {
             </button>
             <div className="chat-dock-hint">
               {isListening
-                ? 'Listening… tap to stop'
+                ? 'Listening… tap to pause'
+                : isSpeaking
+                ? 'Ali is talking…'
                 : state === 'loading'
                 ? 'Ali is thinking…'
                 : state === 'era_revealed'
                 ? 'Finding your era…'
+                : userPaused
+                ? 'Tap to resume'
                 : visibleMsgs.length > 0
-                ? 'Tap to speak'
+                ? 'Listening will start automatically…'
                 : ''}
             </div>
           </>
@@ -956,6 +994,7 @@ export default function EraApp() {
     const saved = localStorage.getItem('era-mood') || 'sage';
     setMood(saved);
     primeVoices(); // load Google voices before Ali speaks for the first time
+    prewarmTTS();  // wake up the GCP TTS client + route so first message is faster
   }, []);
 
   useEffect(() => {

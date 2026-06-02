@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
         name: 'en-US-Journey-F',  // Google's most natural conversational female voice
       },
       audioConfig: {
-        audioEncoding: 'MP3',
+        audioEncoding: 'OGG_OPUS',  // ~3x smaller than MP3, faster transfer
         speakingRate: 1.08,
         volumeGainDb: 1.0,
       },
