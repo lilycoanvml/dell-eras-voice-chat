@@ -18,7 +18,7 @@ const PRODUCT_ASSETS: Record<string, { imageUrl: string; productUrl: string }> =
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2725qe/media-gallery/monitor-ultrasharp-u2725qe-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=906&qlt=100,1&resMode=sharp2&size=906,804&chrss=full',
     productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-27-4k-thunderbolt-hub-monitor-u2725qe/apd/210-bqhr/monitors-monitor-accessories',
   },
-  'Dell 27 Plus QHD Monitor ': {
+  'Dell 27 Plus QHD Monitor': {
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/s-series/s2725dsm/media-gallery/monitor-dell-plus-s2725dsm-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=905&qlt=100,1&resMode=sharp2&size=905,804&chrss=full',
     productUrl: 'https://www.dell.com/en-us/shop/dell-27-plus-qhd-monitor-s2725dsm/apd/210-btgm/monitors-monitor-accessories',
   },
@@ -311,29 +311,43 @@ function ChatScreen({ onComplete, onBack }: {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rec = new (SRA as any)();
-    rec.continuous = false;
+    rec.continuous = true;      // keep listening through natural pauses
     rec.interimResults = true;
     rec.lang = 'en-US';
     let final = '';
+    let silenceTimer: ReturnType<typeof setTimeout> | null = null;
+
+    // After 2.5s of silence, auto-stop so the user doesn't have to tap again
+    const resetSilenceTimer = () => {
+      if (silenceTimer) clearTimeout(silenceTimer);
+      silenceTimer = setTimeout(() => rec.stop(), 2500);
+    };
 
     rec.onstart = () => setIsListening(true);
     rec.onresult = (e: { resultIndex: number; results: SpeechRecognitionResultList }) => {
-      final = '';
       let interim = '';
       for (let i = e.resultIndex; i < e.results.length; i++) {
         if (e.results[i].isFinal) final += e.results[i][0].transcript;
         else interim += e.results[i][0].transcript;
       }
       setInterimText(final || interim);
+      resetSilenceTimer(); // restart the silence countdown on every new word
     };
-    rec.onerror = () => { setIsListening(false); setInterimText(''); };
+    rec.onspeechend = () => resetSilenceTimer(); // speech paused — start countdown
+    rec.onerror = () => {
+      if (silenceTimer) clearTimeout(silenceTimer);
+      setIsListening(false);
+      setInterimText('');
+    };
     rec.onend = () => {
+      if (silenceTimer) clearTimeout(silenceTimer);
       setIsListening(false);
       setInterimText('');
       if (final.trim()) sendMessage(final.trim());
     };
     recognitionRef.current = rec;
     rec.start();
+    resetSilenceTimer(); // start initial timeout in case nothing is said
   };
 
   const stopListening = () => recognitionRef.current?.stop();

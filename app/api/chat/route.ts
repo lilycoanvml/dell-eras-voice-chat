@@ -63,7 +63,7 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
 - Products:
   * Dell XPS 16 — $1,799 (was $2,199, save $400) — "Your work deserves a canvas this beautiful."
   * Dell UltraSharp 27 4K Monitor — $449 (was $699, save $250) — "Every pixel of your vision, rendered faithfully."
-  * Dell Canvas 27 — $1,299 (was $1,799, save $500) — "Draw, design, and create right on your screen."
+  * Dell 27 Plus QHD Monitor — $349 (was $449, save $100) — "A beautiful wide canvas for everything you make."
 
 **The Innovator Era** — developers, engineers, technical builders, data scientists
 - Signals: coding, building products, solving technical problems, startups, systems thinking
@@ -87,7 +87,7 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
 - Products:
   * Dell XPS 13 — $1,099 (was $1,399, save $300) — "The whole world is your office."
   * Dell Pro Wireless Headset WL5022 — $149 (was $229, save $80) — "Crystal-clear calls from wherever you roam."
-  * Dell Power Companion PW7018LC — $129 (was $179, save $50) — "Keep going long after the outlet runs out."
+  * Dell Aluratek Wireless Charging Power Bank — $49 (was $69, save $20) — "Keep going long after the outlet runs out."
 
 **The Visionary Era** — entrepreneurs, founders, strategists, change-makers
 - Signals: changing industries, launching companies, big ideas, disruption, legacy, mission-driven work
@@ -95,7 +95,7 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
 - Products:
   * Dell XPS 16 — $1,799 (was $2,199, save $400) — "Power that matches the scale of your ambition."
   * Dell 40 Curved Conference Monitor — $999 (was $1,399, save $400) — "A panoramic view for people thinking at that scale."
-  * Dell Premier Wireless KM7321W — $249 (was $349, save $100) — "A workspace as polished as your pitch."
+  * Dell Pro Keyboard and Mouse KM5221W — $69 (was $99, save $30) — "A workspace as polished as your pitch."
 
 **The Performer Era** — gamers, streamers, content creators, entertainers
 - Signals: gaming, streaming, live performance, competition, entertainment, building an audience through play
