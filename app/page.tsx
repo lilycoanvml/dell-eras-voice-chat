@@ -18,21 +18,21 @@ const PRODUCT_ASSETS: Record<string, { imageUrl: string; productUrl: string }> =
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2725qe/media-gallery/monitor-ultrasharp-u2725qe-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=906&qlt=100,1&resMode=sharp2&size=906,804&chrss=full',
     productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-27-4k-thunderbolt-hub-monitor-u2725qe/apd/210-bqhr/monitors-monitor-accessories',
   },
-  'Dell Canvas 27': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/workstations/dell-canvas/kv2718d/canvas-kv2718d-bk-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/cty/dell-canvas/spd/dell-canvas-kv2718d',
+  'Dell 27 Plus QHD Monitor ': {
+    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/s-series/s2725dsm/media-gallery/monitor-dell-plus-s2725dsm-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=905&qlt=100,1&resMode=sharp2&size=905,804&chrss=full',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-27-plus-qhd-monitor-s2725dsm/apd/210-btgm/monitors-monitor-accessories',
   },
   'Dell XPS 15 Developer Edition': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-15-9530/media-gallery/silver/touch/notebook-xps-15-9530-t-silver-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/xps-15-laptop/spd/xps-15-9530-laptop',
+    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/dell/dell-15-intel-3530/media-gallery/laptop-dell-dc15250nt-sl-metal-usbc-full-function-fpr-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=686&qlt=100,1&resMode=sharp2&size=686,402&chrss=full',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/dell-15-laptop/spd/dell-dc15250-laptop/usedc15250hbtshxhl_q1',
   },
   'Dell UltraSharp 32 4K USB-C Monitor': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u3224kb/media-gallery/monitor-ultrasharp-u3224kb-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=906&qlt=100,1&resMode=sharp2&size=906,804&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-32-4k-thunderbolt-hub-monitor-u3224kb/apd/210-bcfo/monitors-monitor-accessories',
+    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u4323qe/media-gallery/gray/monitor-u4323qe-gray-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=816&qlt=100,1&resMode=sharp2&size=816,804&chrss=full',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-43-4k-usb-c-hub-monitor-u4323qe/apd/210-bfpo/monitors-monitor-accessories',
   },
   'Dell Precision 5690': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/workstations/precision-workstations/precision-16-5690/media-gallery/silver/touch/workstation-precision-16-5690-t-silver-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/workstations/precision-5690-workstation/spd/precision-16-5690-workstation',
+    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/workstations/mobile-workstations/precision/5690/media-gallery/workstation-precision-16-5690-black-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=660&qlt=100,1&resMode=sharp2&size=660,402&chrss=full',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/precision-5690-workstation/spd/precision-16-5690-laptop/xctop5690usvp',
   },
   'Dell Latitude 9550': {
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/latitude-notebooks/latitude-14-9450-laptop-2-in-1/mg/notebook-latitude-14-9450-t-wlan-gray-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full',
@@ -40,7 +40,7 @@ const PRODUCT_ASSETS: Record<string, { imageUrl: string; productUrl: string }> =
   },
   'Dell Thunderbolt Dock WD22TB4': {
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/docks/dell-thunderbolt-4-dock-wd22tb4/spi/ng/dock-wd22tb4-black-campaign-hero-504x350-ng.psd?qlt=95&fmt=jpg',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-thunderbolt-dock-wd22tb4/apd/210-bdqh/docks',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-pro-thunderbolt-4-dock-wd25tb4/apd/210-btmr/docks',
   },
   'Dell 27 Monitor P2725HE': {
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/p-series/p2725he/media-gallery/monitor-pseries-p2725he-bk-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=907&qlt=100,1&resMode=sharp2&size=907,804&chrss=full',
@@ -51,20 +51,20 @@ const PRODUCT_ASSETS: Record<string, { imageUrl: string; productUrl: string }> =
     productUrl: 'https://www.dell.com/en-us/shop/dell-laptops/xps-13-laptop/spd/xps-13-9345-laptop',
   },
   'Dell Pro Wireless Headset WL5022': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/electronics-and-accessories/dell/headphones/wl5022/wl5022-xau-02-bk.psd?fmt=jpg&wid=527&hei=527',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-pro-wireless-headset-wl5022/apd/520-aatb/pc-accessories',
+    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/headphones/wl5024/media-gallery/headset-dell-wl5024-bk-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=516&qlt=100,1&resMode=sharp2&size=516,804&chrss=full',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-pro-plus-wireless-anc-headset-wl5024/apd/520-bbgr/pc-accessories',
   },
-  'Dell Power Companion PW7018LC': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/electronics-and-accessories/dell/power-adapters-batteries/pw7018lc/pw7018lc-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-notebook-power-bank-plus-usb-c-65wh-pw7018lc/apd/451-bcev/pc-accessories',
+  'Dell Aluratek Wireless Charging Power Bank': {
+    imageUrl: 'https://snpi.dell.com/snp/images/products/large/en-us~AB139636/AB139636.jpg',
+    productUrl: 'https://www.dell.com/en-us/shop/aluratek-wireless-charging-power-bank/apd/ab139636/pc-accessories',
   },
   'Dell 40 Curved Conference Monitor': {
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u4025qw/media-gallery/monitor-ultrasharp-u4025qw-gray-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=1242&qlt=100,1&resMode=sharp2&size=1242,804&chrss=full',
     productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-40-curved-thunderbolt-hub-monitor-u4025qw/apd/210-bmdp/monitors-monitor-accessories',
   },
-  'Dell Premier Wireless KM7321W': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/peripherals/input-devices/dell/keyboards/km7321w/global-spi/ng/dell-keyboard-mouse-km7321w-pdp-relsize-500-ng.psd?fmt=png-alpha',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-premier-multi-device-wireless-keyboard-and-mouse-km7321w/apd/580-ajix/pc-accessories',
+  'Dell Pro Keyboard and Mouse KM5221W': {
+    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/images/products/electronics-and-accessories/dell/keyboards/km5221w-wth/windows-11/km5221w-xkb-10060rf-wh.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=1304&qlt=100,1&resMode=sharp2&size=1304,804&chrss=full',
+    productUrl: 'https://www.dell.com/en-us/shop/dell-pro-keyboard-and-mouse-km5221w-us-english-white/apd/580-akbm/pc-accessories',
   },
   // Alienware entries intentionally omitted — CDN paths unverified.
   // Products without an entry here show a styled era-color placeholder.
