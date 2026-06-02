@@ -66,18 +66,8 @@ const PRODUCT_ASSETS: Record<string, { imageUrl: string; productUrl: string }> =
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/peripherals/input-devices/dell/keyboards/km7321w/global-spi/ng/dell-keyboard-mouse-km7321w-pdp-relsize-500-ng.psd?fmt=png-alpha',
     productUrl: 'https://www.dell.com/en-us/shop/dell-premier-multi-device-wireless-keyboard-and-mouse-km7321w/apd/580-ajix/pc-accessories',
   },
-  'Alienware m18 R2': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/alienware/notebooks/alienware-m18/media-gallery/dark/notebook-alienware-m18-r2-dark-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=612&qlt=100,1&resMode=sharp2&size=612,402&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/gaming-laptops/alienware-m18-r2-gaming-laptop/spd/alienware-m18-r2-laptop',
-  },
-  'Alienware 34 QD-OLED AW3423DWF': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/alienware/monitors/aw3423dwf/media-gallery/monitor-alienware-aw3423dwf-dark-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=906&qlt=100,1&resMode=sharp2&size=906,804&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/alienware-34-curved-qd-oled-gaming-monitor-aw3423dwf/apd/210-bfrq/monitors-monitor-accessories',
-  },
-  'Alienware Pro Wireless Gaming Mouse AW920M': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/alienware/accessories/aw920m/media-gallery/dark/mouse-alienware-aw920m-dark-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=527&qlt=100,1&resMode=sharp2&size=527,402&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/alienware-pro-wireless-gaming-mouse-aw920m/apd/570-bbdp/pc-accessories',
-  },
+  // Alienware entries intentionally omitted — CDN paths unverified.
+  // Products without an entry here show a styled era-color placeholder.
 };
 
 // Traits by era name (from API system prompt eras)
@@ -590,7 +580,7 @@ function RecsScreen({ eraReveal, onShare, onBack }: {
           <div className="recs-hero-card">
             {heroAsset && (
               <div className="recs-hero-photo">
-                <img src={heroAsset.imageUrl} alt={hero.name} />
+                <img src={heroAsset.imageUrl} alt={hero.name} onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }} />
               </div>
             )}
             <div className="recs-hero-body">
@@ -629,7 +619,7 @@ function RecsScreen({ eraReveal, onShare, onBack }: {
                 >
                   <div className="polaroid-photo">
                     {asset ? (
-                      <img src={asset.imageUrl} alt={p.name} className="polaroid-img" />
+                      <img src={asset.imageUrl} alt={p.name} className="polaroid-img" onError={e => { const el = e.target as HTMLImageElement; el.style.display = 'none'; el.parentElement!.style.background = `${era.primaryColor}18`; }} />
                     ) : (
                       <div style={{
                         width: '100%', height: '100%', background: `${era.primaryColor}18`,
