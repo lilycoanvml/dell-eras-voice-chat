@@ -52,7 +52,7 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
     { },
     { }
   ],
-  "closingMessage": "Here are a few things that can support your next era."
+  "closingMessage": "[Ali's spoken reveal — 2 sentences, warm and direct. Name the era out loud and connect it to something specific they said. Feel like a friend landing the moment: e.g. 'Okay — based on everything you've told me, you are absolutely in your Creator Era. The way you talk about making things that didn't exist before? That's your whole signature.' Keep it under 40 words. No product mentions here.]"
 }
 
 ## THE SIX ERAS

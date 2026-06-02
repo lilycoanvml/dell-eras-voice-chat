@@ -113,7 +113,7 @@ function speakFallback(text: string) {
 
 // Primary: Google Cloud TTS Journey-F (natural, energetic female voice)
 // Falls back to Web Speech API if the /api/tts route is unavailable
-async function speak(text: string) {
+async function speak(text: string, onEnd?: () => void) {
   if (typeof window === 'undefined') return;
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   window.speechSynthesis?.cancel();
@@ -126,9 +126,12 @@ async function speak(text: string) {
     if (!res.ok) throw new Error('TTS unavailable');
     const { audio } = await res.json();
     currentAudio = new Audio(`data:audio/mp3;base64,${audio}`);
+    if (onEnd) currentAudio.addEventListener('ended', () => setTimeout(onEnd, 700), { once: true });
     await currentAudio.play();
   } catch {
     speakFallback(text);
+    // Fallback: estimate duration from word count then fire onEnd
+    if (onEnd) setTimeout(onEnd, Math.max(2800, text.split(' ').length * 380));
   }
 }
 
@@ -291,9 +294,8 @@ function ChatScreen({ onComplete, onBack }: {
   useEffect(() => {
     if (!eraReveal) return;
     setClosingMsg(eraReveal.closingMessage);
-    speak(eraReveal.closingMessage);
-    const t = setTimeout(() => onComplete(eraReveal), 3200);
-    return () => clearTimeout(t);
+    // Transition only after Ali finishes speaking — no fixed timeout
+    speak(eraReveal.closingMessage, () => onComplete(eraReveal));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eraReveal]);
 
@@ -721,11 +723,28 @@ function ShareScreen({ eraReveal, onRestart, onBack }: {
             <div className="share-card-name">{shortName}<br />Era</div>
             <div className="share-card-tagline">{era.tagline}</div>
             <div className="share-card-tiles">
-              {products.slice(0, 3).map((p, i) => (
-                <div key={i} className="share-tile">
-                  <span className="share-tile-text">{p.category}</span>
-                </div>
-              ))}
+              {products.slice(0, 3).map((p, i) => {
+                const asset = PRODUCT_ASSETS[p.name] ?? null;
+                return (
+                  <div key={i} className="share-tile" style={asset ? { background: 'rgba(255,255,255,0.92)', padding: 3 } : {}}>
+                    {asset ? (
+                      <img
+                        src={asset.imageUrl} alt={p.name}
+                        style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 9, mixBlendMode: 'multiply' }}
+                        onError={e => {
+                          const el = e.target as HTMLImageElement;
+                          const tile = el.parentElement!;
+                          tile.style.cssText = '';
+                          tile.className = 'share-tile';
+                          tile.innerHTML = `<span class="share-tile-text">${p.category}</span>`;
+                        }}
+                      />
+                    ) : (
+                      <span className="share-tile-text">{p.category}</span>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
