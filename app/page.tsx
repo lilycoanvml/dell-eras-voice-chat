@@ -193,6 +193,21 @@ function ExtLinkIcon({ size = 12 }: { size?: number }) {
     </svg>
   );
 }
+function KeyboardIcon({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <rect x="2.5" y="6" width="19" height="13" rx="2.2" stroke={color} strokeWidth="1.8" />
+      <path d="M6 10h0.5M9 10h0.5M12 10h0.5M15 10h0.5M18 10h0.5M6 13h0.5M9 13h0.5M12 13h0.5M15 13h0.5M18 13h0.5M8 16h8" stroke={color} strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+function SendIcon({ size = 18, color = 'currentColor' }: { size?: number; color?: string }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
+      <path d="M4 12L20 4L13 20L11 13L4 12Z" stroke={color} strokeWidth="1.8" strokeLinejoin="round" />
+    </svg>
+  );
+}
 
 // ─── ALI ORB ─────────────────────────────────────────────────────────────────
 function AliOrb({ size, state = 'idle' }: { size: number; state?: 'idle' | 'listening' | 'thinking' | 'speaking' }) {
@@ -336,6 +351,7 @@ function ChatScreen({ onComplete, onBack }: {
   const [hasSpeech,   setHasSpeech]     = useState(true);
   const [isSpeaking,  setIsSpeaking]    = useState(false);
   const [textInput,   setTextInput]     = useState('');
+  const [inputMode,   setInputMode]     = useState<'voice' | 'text'>('voice');
   const recognitionRef = useRef<EventTarget & { start(): void; stop(): void } | null>(null);
   const spokenIds      = useRef<Set<string>>(new Set());
   const scrollRef      = useRef<HTMLDivElement>(null);
@@ -355,7 +371,7 @@ function ChatScreen({ onComplete, onBack }: {
     startConversation();
     const SRA = (window as typeof window & { SpeechRecognition?: unknown; webkitSpeechRecognition?: unknown }).SpeechRecognition
              || (window as typeof window & { webkitSpeechRecognition?: unknown }).webkitSpeechRecognition;
-    if (!SRA) setHasSpeech(false);
+    if (!SRA) { setHasSpeech(false); setInputMode('text'); }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -512,11 +528,35 @@ function ChatScreen({ onComplete, onBack }: {
         )}
       </div>
 
-      {/* Mic dock */}
-      <div className="chat-dock" style={{ paddingBottom: 32 }}>
-        {isListening && <Waveform />}
+      {/* Input dock */}
+      <div className="chat-dock" style={{ paddingBottom: 28 }}>
+        {isListening && inputMode === 'voice' && <Waveform />}
 
-        {hasSpeech ? (
+        {/* Voice / Text toggle (only when speech is available) */}
+        {hasSpeech && (
+          <div className="input-mode-toggle">
+            <button
+              className={`input-mode-btn${inputMode === 'voice' ? ' active' : ''}`}
+              onClick={() => { setInputMode('voice'); }}
+              disabled={isBusy || isListening}
+              aria-label="Use voice"
+            >
+              <MicIcon size={14} color="currentColor" />
+              Voice
+            </button>
+            <button
+              className={`input-mode-btn${inputMode === 'text' ? ' active' : ''}`}
+              onClick={() => { setInputMode('text'); if (isListening) stopListening(); }}
+              disabled={isBusy}
+              aria-label="Type your response"
+            >
+              <KeyboardIcon size={14} color="currentColor" />
+              Type
+            </button>
+          </div>
+        )}
+
+        {inputMode === 'voice' && hasSpeech ? (
           <>
             <button
               onClick={isListening ? stopListening : startListening}
@@ -552,32 +592,21 @@ function ChatScreen({ onComplete, onBack }: {
             </div>
           </>
         ) : (
-          /* Text fallback for browsers without SpeechRecognition */
-          <div style={{ display: 'flex', gap: 10, width: '100%', maxWidth: 540 }}>
+          <div className="chat-text-input">
             <input
               value={textInput}
               onChange={e => setTextInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && handleTextSend()}
-              placeholder="Type your answer…"
+              placeholder={isBusy ? 'Ali is thinking…' : 'Type your answer…'}
               disabled={isBusy}
-              style={{
-                flex: 1, padding: '11px 16px', borderRadius: 3,
-                border: '1.5px solid var(--divider)', background: 'var(--card)',
-                color: 'var(--ink)', fontFamily: "'Fraunces', serif", fontSize: 15,
-                outline: 'none',
-              }}
+              autoFocus={inputMode === 'text'}
             />
             <button
               onClick={handleTextSend}
               disabled={!textInput.trim() || isBusy}
-              style={{
-                padding: '11px 18px', borderRadius: 3, border: 'none',
-                background: 'var(--ink)', color: 'var(--card)', cursor: 'pointer',
-                fontFamily: "'Space Mono', monospace", fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase',
-                opacity: !textInput.trim() || isBusy ? 0.45 : 1,
-              }}
+              aria-label="Send message"
             >
-              Send
+              <SendIcon size={18} color="#fff" />
             </button>
           </div>
         )}

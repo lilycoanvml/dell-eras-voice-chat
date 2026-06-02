@@ -333,6 +333,51 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
 }
 .chat-dock-hint { font-family:'Caveat',cursive; font-size:14px; color:var(--ink3); }
 
+/* Voice / Text toggle */
+.input-mode-toggle {
+  display:inline-flex; gap:2px; padding:3px;
+  background:var(--surface2); border-radius:999px;
+  margin-bottom:2px;
+}
+.input-mode-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  padding:7px 14px; border-radius:999px; border:none;
+  background:transparent; color:var(--ink2); cursor:pointer;
+  font-family:'Space Mono',monospace; font-size:9.5px;
+  letter-spacing:0.10em; text-transform:uppercase; font-weight:700;
+  transition: all 0.18s ease-out;
+}
+.input-mode-btn:hover:not(:disabled):not(.active) { color:var(--ink); }
+.input-mode-btn:disabled { opacity:0.45; cursor:not-allowed; }
+.input-mode-btn.active {
+  background:var(--card); color:var(--dell-blue);
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+/* Text input row */
+.chat-text-input {
+  display:flex; gap:10px; width:100%; max-width:540px;
+  align-items:center;
+}
+.chat-text-input input {
+  flex:1; padding:14px 18px; border-radius:999px;
+  border:1.5px solid var(--line); background:var(--card);
+  color:var(--ink); font-family:'Fraunces',serif; font-size:15.5px;
+  outline:none; transition: border-color 0.18s;
+}
+.chat-text-input input:focus { border-color:var(--dell-blue); }
+.chat-text-input input::placeholder { color:var(--ink3); font-style:italic; }
+.chat-text-input input:disabled { opacity:0.55; }
+.chat-text-input button {
+  width:48px; height:48px; border-radius:50%; border:none;
+  background:var(--dell-blue); cursor:pointer; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow: 0 4px 16px rgba(6,114,203,0.30);
+  transition: transform 0.18s, opacity 0.18s;
+}
+.chat-text-input button:hover:not(:disabled) { transform:translateY(-1px) scale(1.03); }
+.chat-text-input button:disabled { opacity:0.35; cursor:not-allowed; box-shadow:none; }
+
 /* ── Reveal screen ── */
 .reveal-inner {
   flex:1; display:flex; flex-direction:column; justify-content:center;
