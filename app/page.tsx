@@ -18,9 +18,9 @@ const PRODUCT_ASSETS: Record<string, { imageUrl: string; productUrl: string }> =
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2725qe/media-gallery/monitor-ultrasharp-u2725qe-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=906&qlt=100,1&resMode=sharp2&size=906,804&chrss=full',
     productUrl: 'https://www.dell.com/en-us/shop/dell-ultrasharp-27-4k-thunderbolt-hub-monitor-u2725qe/apd/210-bqhr/monitors-monitor-accessories',
   },
-  'Dell 27 Plus QHD Monitor': {
-    imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/s-series/s2725dsm/media-gallery/monitor-dell-plus-s2725dsm-gy-gallery-1.psd?fmt=png-alpha&pscan=auto&scl=1&hei=804&wid=905&qlt=100,1&resMode=sharp2&size=905,804&chrss=full',
-    productUrl: 'https://www.dell.com/en-us/shop/dell-27-plus-qhd-monitor-s2725dsm/apd/210-btgm/monitors-monitor-accessories',
+  'Dell Creative Labs Pebble Nova': {
+    imageUrl: 'https://snpi.dell.com/snp/images/products/large/en-us~AD384558/AD384558.jpg',
+    productUrl: 'https://www.dell.com/en-us/shop/creative-labs-pebble-nova-white/apd/ad384558/audio',
   },
   'Dell XPS 15 Developer Edition': {
     imageUrl: 'https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/dell/dell-15-intel-3530/media-gallery/laptop-dell-dc15250nt-sl-metal-usbc-full-function-fpr-gallery-2.psd?fmt=png-alpha&pscan=auto&scl=1&hei=402&wid=686&qlt=100,1&resMode=sharp2&size=686,402&chrss=full',

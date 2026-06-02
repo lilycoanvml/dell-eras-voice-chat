@@ -63,7 +63,7 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
 - Products:
   * Dell XPS 16 — $1,799 (was $2,199, save $400) — "Your work deserves a canvas this beautiful."
   * Dell UltraSharp 27 4K Monitor — $449 (was $699, save $250) — "Every pixel of your vision, rendered faithfully."
-  * Dell 27 Plus QHD Monitor — $349 (was $449, save $100) — "A beautiful wide canvas for everything you make."
+  * Dell Creative Labs Pebble Nova — $99 (was $149, save $50) — "Studio-grade sound for the work that deserves to be heard."
 
 **The Innovator Era** — developers, engineers, technical builders, data scientists
 - Signals: coding, building products, solving technical problems, startups, systems thinking
