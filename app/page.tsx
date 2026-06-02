@@ -93,9 +93,8 @@ const ERA_TRAITS: Record<string, string[]> = {
 const PROTS: [string, string, string] = ['-2deg', '1.8deg', '-1.1deg'];
 
 // ─── TTS ─────────────────────────────────────────────────────────────────────
-// Chrome loads Google voices asynchronously — cache them once they're ready
-// so speak() always finds the good voices instead of falling back to robotic defaults.
 let voiceCache: SpeechSynthesisVoice[] = [];
+let currentAudio: HTMLAudioElement | null = null;
 
 function primeVoices() {
   if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
@@ -104,33 +103,43 @@ function primeVoices() {
   window.speechSynthesis.addEventListener('voiceschanged', load);
 }
 
-function pickVoice(voices: SpeechSynthesisVoice[]) {
-  return (
+// Web Speech API fallback (used when GCP TTS route is unavailable locally)
+function speakFallback(text: string) {
+  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.rate = 1.02; utterance.pitch = 1.28; utterance.volume = 1;
+  const voices = voiceCache.length > 0 ? voiceCache : window.speechSynthesis.getVoices();
+  const preferred =
     voices.find(v => v.name === 'Google UK English Female') ||
     voices.find(v => v.name === 'Google US English')        ||
     voices.find(v => v.name === 'Karen')                    ||
-    voices.find(v => v.name === 'Veena')                    ||
     voices.find(v => v.name === 'Samantha')                 ||
     voices.find(v => v.name.includes('Aria'))               ||
-    voices.find(v => v.lang === 'en-GB' && !v.name.toLowerCase().includes('male')) ||
-    voices.find(v => v.lang.startsWith('en') && !v.name.toLowerCase().includes('male'))
-  );
+    voices.find(v => v.lang.startsWith('en') && !v.name.toLowerCase().includes('male'));
+  if (preferred) utterance.voice = preferred;
+  window.speechSynthesis.speak(utterance);
 }
 
-function speak(text: string) {
-  if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
-  window.speechSynthesis.cancel();
-
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.rate   = 1.02;
-  utterance.pitch  = 1.28;
-  utterance.volume = 1;
-
-  const voices = voiceCache.length > 0 ? voiceCache : window.speechSynthesis.getVoices();
-  const preferred = pickVoice(voices);
-  if (preferred) utterance.voice = preferred;
-
-  window.speechSynthesis.speak(utterance);
+// Primary: Google Cloud TTS Journey-F (natural, energetic female voice)
+// Falls back to Web Speech API if the /api/tts route is unavailable
+async function speak(text: string) {
+  if (typeof window === 'undefined') return;
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  window.speechSynthesis?.cancel();
+  try {
+    const res = await fetch('/api/tts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    if (!res.ok) throw new Error('TTS unavailable');
+    const { audio } = await res.json();
+    currentAudio = new Audio(`data:audio/mp3;base64,${audio}`);
+    await currentAudio.play();
+  } catch {
+    speakFallback(text);
+  }
 }
 
 // ─── ICONS ───────────────────────────────────────────────────────────────────
@@ -767,7 +776,10 @@ export default function EraApp() {
   const go = (s: Screen) => setScreen(s);
 
   const restart = () => {
-    if (typeof window !== 'undefined') window.speechSynthesis?.cancel();
+    if (typeof window !== 'undefined') {
+      window.speechSynthesis?.cancel();
+      if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+    }
     setFlowKey(k => k + 1);
     setEraReveal(null);
     go('landing');
