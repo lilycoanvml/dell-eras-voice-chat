@@ -82,6 +82,19 @@ const ERA_TRAITS: Record<string, string[]> = {
 
 const PROTS: [string, string, string] = ['-2deg', '1.8deg', '-1.1deg'];
 
+// Fuzzy product lookup — handles slight name variations Gemini sometimes uses
+// (e.g. "Dell XPS 15" instead of "Dell XPS 15 Developer Edition")
+function getAsset(name: string) {
+  if (PRODUCT_ASSETS[name]) return PRODUCT_ASSETS[name];
+  const n = name.toLowerCase().trim();
+  const key = Object.keys(PRODUCT_ASSETS).find(k => {
+    const k2 = k.toLowerCase().trim();
+    return k2.includes(n) || n.includes(k2) ||
+      n.split(' ').slice(0, 3).join(' ') === k2.split(' ').slice(0, 3).join(' ');
+  });
+  return key ? PRODUCT_ASSETS[key] : null;
+}
+
 // ─── TTS ─────────────────────────────────────────────────────────────────────
 let voiceCache: SpeechSynthesisVoice[] = [];
 let currentAudio: HTMLAudioElement | null = null;
@@ -111,12 +124,26 @@ function speakFallback(text: string) {
   window.speechSynthesis.speak(utterance);
 }
 
+// Module-level callbacks so ChatScreen can show speaking state on the orb
+let _onSpeakStart: (() => void) | null = null;
+let _onSpeakEnd: (() => void) | null = null;
+
+// Sanitize closingMessage — Gemini occasionally returns template text instead of
+// actual content (square-bracket instructions). Strip it to a safe fallback.
+function sanitizeClosingMsg(msg: string): string {
+  if (!msg || msg.startsWith('[') || msg.length > 350) {
+    return "Based on everything you've shared with me, I know exactly which era this is. Let me show you.";
+  }
+  return msg.replace(/\[.*?\]/g, '').trim() || "Let me show you your era.";
+}
+
 // Primary: Google Cloud TTS Journey-F (natural, energetic female voice)
 // Falls back to Web Speech API if the /api/tts route is unavailable
 async function speak(text: string, onEnd?: () => void) {
   if (typeof window === 'undefined') return;
   if (currentAudio) { currentAudio.pause(); currentAudio = null; }
   window.speechSynthesis?.cancel();
+  _onSpeakStart?.();
   try {
     const res = await fetch('/api/tts', {
       method: 'POST',
@@ -126,11 +153,11 @@ async function speak(text: string, onEnd?: () => void) {
     if (!res.ok) throw new Error('TTS unavailable');
     const { audio } = await res.json();
     currentAudio = new Audio(`data:audio/mp3;base64,${audio}`);
-    if (onEnd) currentAudio.addEventListener('ended', () => setTimeout(onEnd, 700), { once: true });
+    currentAudio.addEventListener('ended', () => { _onSpeakEnd?.(); if (onEnd) setTimeout(onEnd, 700); }, { once: true });
     await currentAudio.play();
   } catch {
+    _onSpeakEnd?.();
     speakFallback(text);
-    // Fallback: estimate duration from word count then fire onEnd
     if (onEnd) setTimeout(onEnd, Math.max(2800, text.split(' ').length * 380));
   }
 }
@@ -264,11 +291,19 @@ function ChatScreen({ onComplete, onBack }: {
   const [interimText, setInterimText]   = useState('');
   const [closingMsg,  setClosingMsg]    = useState<string | null>(null);
   const [hasSpeech,   setHasSpeech]     = useState(true);
+  const [isSpeaking,  setIsSpeaking]    = useState(false);
   const [textInput,   setTextInput]     = useState('');
   const recognitionRef = useRef<EventTarget & { start(): void; stop(): void } | null>(null);
   const spokenIds      = useRef<Set<string>>(new Set());
   const scrollRef      = useRef<HTMLDivElement>(null);
   const started        = useRef(false);
+
+  // Register speaking state callbacks so the orb animates during TTS load/play
+  useEffect(() => {
+    _onSpeakStart = () => setIsSpeaking(true);
+    _onSpeakEnd   = () => setIsSpeaking(false);
+    return () => { _onSpeakStart = null; _onSpeakEnd = null; };
+  }, []);
 
   // Kick off conversation once
   useEffect(() => {
@@ -293,9 +328,9 @@ function ChatScreen({ onComplete, onBack }: {
   // Handle era reveal
   useEffect(() => {
     if (!eraReveal) return;
-    setClosingMsg(eraReveal.closingMessage);
-    // Transition only after Ali finishes speaking — no fixed timeout
-    speak(eraReveal.closingMessage, () => onComplete(eraReveal));
+    const msg = sanitizeClosingMsg(eraReveal.closingMessage);
+    setClosingMsg(msg);
+    speak(msg, () => onComplete(eraReveal));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eraReveal]);
 
@@ -372,11 +407,19 @@ function ChatScreen({ onComplete, onBack }: {
         <button className="era-icon-btn" onClick={onBack} aria-label="Back">
           <ChevronLeft size={16} />
         </button>
-        <AliOrb size={32} state={state === 'loading' ? 'thinking' : isListening ? 'listening' : 'idle'} />
+        <AliOrb size={32} state={
+          state === 'loading' ? 'thinking'
+          : isListening ? 'listening'
+          : isSpeaking ? 'speaking'
+          : 'idle'
+        } />
         <div style={{ flex: 1 }}>
           <div className="chat-ali-label">Ali</div>
           <div className="chat-ali-sub">
-            {state === 'loading' ? 'Thinking…' : isListening ? 'Listening…' : 'AI shopping companion'}
+            {state === 'loading' ? 'Thinking…'
+             : isListening ? 'Listening…'
+             : isSpeaking ? 'Speaking…'
+             : 'AI shopping companion'}
           </div>
         </div>
         <div className="chat-progress">
@@ -558,7 +601,6 @@ function RecsScreen({ eraReveal, onShare, onBack }: {
   const hero = products[0];
   const rest = products.slice(1, 4); // max 3 polaroids
 
-  const getAsset = (name: string) => PRODUCT_ASSETS[name] ?? null;
   const heroAsset = hero ? getAsset(hero.name) : null;
 
   const totalSave = products.reduce((sum, p) => {
