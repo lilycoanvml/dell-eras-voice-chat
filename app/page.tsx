@@ -243,7 +243,7 @@ function LandingScreen({ mood, onToggleMood, onStart }: {
           Find Your<br /><em>Next Era</em>
         </h1>
         <p className="landing-sub">
-          Talk with Ali and discover the tech built for who you&apos;re becoming — not just what you&apos;d buy.
+          Talk with Ali and discover the tech for who you&apos;re becoming.
         </p>
       </div>
 
