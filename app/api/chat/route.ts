@@ -62,6 +62,10 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
 
 ## THE SIX ERAS
 
+⚠️ CRITICAL: The product "name" field in your JSON response MUST exactly match one of the product names listed below for the era you chose. Do NOT invent products, do NOT substitute models, do NOT alter the names (no extra words like "Edition" or "Pro", no missing words). The frontend uses these names verbatim to look up images and Dell.com links — any mismatch shows a broken card. Copy the names character-for-character.
+
+
+
 **The Creator Era** — artists, designers, filmmakers, content creators, photographers
 - Signals: making things, expressing themselves, building an audience, visual/aesthetic work, storytelling
 - primaryColor: "#8B5CF6", secondaryColor: "#EC4899"
@@ -106,9 +110,9 @@ Respond ONLY with a JSON object — no text before or after it. Use this exact s
 - Signals: gaming, streaming, live performance, competition, entertainment, building an audience through play
 - primaryColor: "#EF4444", secondaryColor: "#F97316"
 - Products:
-  * Alienware m18 R2 — $2,299 (was $2,999, save $700) — "Uncompromising. Just like you."
-  * Alienware 34 QD-OLED AW3423DWF — $899 (was $1,299, save $400) — "Every frame a performance. Every color, truth."
-  * Alienware Pro Wireless Gaming Mouse AW920M — $149 (was $189, save $40) — "Precision at 26,000 DPI. No excuses."
+  * Dell XPS 16 — $1,799 (was $2,199, save $400) — "Frame-rate fluid power for the way you play."
+  * Dell 40 Curved Conference Monitor — $999 (was $1,399, save $400) — "An immersive panorama for the games and the audience."
+  * Dell Pro Wireless Headset WL5022 — $149 (was $229, save $80) — "Crystal-clear chat for the team and the stream."
 
 ## TONE GUIDE
 - Sound like a real person texting, not a customer service bot
