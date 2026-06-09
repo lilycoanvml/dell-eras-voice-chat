@@ -722,6 +722,76 @@ button { font-family: inherit; -webkit-tap-highlight-color: transparent; }
   .ask-ali-panel { max-width:none; max-height:100vh; min-height:100vh; border-radius:0; }
 }
 
+/* ══════════════════════════════════════════════════════════════════
+   MOBILE-FRAME DEMO MODE — wraps the entire app in a phone-shaped box
+   for presentation. Purely visual, no functionality changes.
+   ══════════════════════════════════════════════════════════════════ */
+@keyframes phoneFrameIn {
+  from { opacity:0; transform:translate(-50%,-50%) scale(0.94); }
+  to   { opacity:1; transform:translate(-50%,-50%) scale(1); }
+}
+
+#era-app.mobile-frame {
+  /* Override the default fullscreen positioning to become a phone shape */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  inset: auto;
+  width: 390px;
+  height: 844px;
+  max-height: calc(100vh - 32px);
+  border-radius: 44px;
+  overflow: hidden;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 0 0 8px #0a0a0e,
+    0 0 0 9px #2a2a2e,
+    0 40px 80px rgba(0,0,0,0.55),
+    0 20px 40px rgba(0,0,0,0.40);
+  animation: phoneFrameIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+
+/* Dark backdrop body when mobile-frame is active */
+body:has(#era-app.mobile-frame) {
+  background: #1a1a1f;
+  background-image: radial-gradient(circle at 30% 20%, #2a2a35 0%, #0c0c10 70%);
+}
+
+/* Constrain all fixed-position children to the phone frame */
+#era-app.mobile-frame .ask-ali-fab,
+#era-app.mobile-frame .ask-ali-overlay,
+#era-app.mobile-frame .ask-ali-hint,
+#era-app.mobile-frame .sticky {
+  position: absolute;
+}
+
+/* Below the phone height, hide stickies so they don't overlap */
+@media (max-height: 700px) {
+  #era-app.mobile-frame .sticky { display: none; }
+}
+
+/* On actual small devices, drop the frame — no point shrinking a phone */
+@media (max-width: 540px) {
+  #era-app.mobile-frame {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    transform: none;
+    border-radius: 0;
+    box-shadow: none;
+    animation: none;
+  }
+  body:has(#era-app.mobile-frame) { background: var(--bg); }
+  #era-app.mobile-frame .ask-ali-fab,
+  #era-app.mobile-frame .ask-ali-overlay,
+  #era-app.mobile-frame .ask-ali-hint,
+  #era-app.mobile-frame .sticky {
+    position: fixed;
+  }
+}
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
   html, body { overflow-y: auto; }

@@ -310,8 +310,12 @@ function IntroScreen({ onDone }: { onDone: () => void }) {
 }
 
 // ─── LANDING SCREEN ──────────────────────────────────────────────────────────
-function LandingScreen({ mood, onToggleMood, onStart }: {
-  mood: string; onToggleMood: () => void; onStart: () => void;
+function LandingScreen({ mood, onToggleMood, mobileFrame, onToggleFrame, onStart }: {
+  mood: string;
+  onToggleMood: () => void;
+  mobileFrame: boolean;
+  onToggleFrame: () => void;
+  onStart: () => void;
 }) {
   return (
     <div className="era-screen">
@@ -323,7 +327,21 @@ function LandingScreen({ mood, onToggleMood, onStart }: {
         <div className="era-brand">
           <strong>Dell Technologies</strong><br />Black Friday 2026
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+          <button className="era-mood-toggle" onClick={onToggleFrame} aria-label="Toggle mobile frame">
+            {mobileFrame ? (
+              <svg width="11" height="14" viewBox="0 0 11 14" fill="none">
+                <rect x="0.6" y="0.6" width="9.8" height="12.8" rx="1.8" stroke="currentColor" strokeWidth="1.2" />
+                <rect x="4.3" y="11" width="2.4" height="0.6" rx="0.3" fill="currentColor" />
+              </svg>
+            ) : (
+              <svg width="14" height="12" viewBox="0 0 14 12" fill="none">
+                <rect x="0.6" y="0.6" width="12.8" height="8.8" rx="1.2" stroke="currentColor" strokeWidth="1.2" />
+                <rect x="4.5" y="10.4" width="5" height="0.8" rx="0.4" fill="currentColor" />
+              </svg>
+            )}
+            <span>{mobileFrame ? 'Mobile' : 'Desktop'}</span>
+          </button>
           <button className="era-mood-toggle" onClick={onToggleMood}>
             <div className="era-mood-dot" />
             <span>{mood === 'sage' ? 'Light' : 'Dark'}</span>
@@ -1214,10 +1232,12 @@ export default function EraApp() {
   const [hintShown,     setHintShown]     = useState(false); // has Ali introduced Ask Ali yet?
   const [showHint,      setShowHint]      = useState(false); // is the arrow + label currently visible?
   const [mood,          setMood]          = useState('sage');
+  const [mobileFrame,   setMobileFrame]   = useState(false); // demo wrapper to simulate phone view
 
   useEffect(() => {
     const saved = localStorage.getItem('era-mood') || 'sage';
     setMood(saved);
+    setMobileFrame(localStorage.getItem('era-mobile-frame') === '1');
     primeVoices(); // load Google voices before Ali speaks for the first time
     prewarmTTS();  // wake up the GCP TTS client + route so first message is faster
   }, []);
@@ -1230,6 +1250,14 @@ export default function EraApp() {
     const next = mood === 'sage' ? 'sand' : 'sage';
     setMood(next);
     localStorage.setItem('era-mood', next);
+  };
+
+  const toggleMobileFrame = () => {
+    setMobileFrame(prev => {
+      const next = !prev;
+      localStorage.setItem('era-mobile-frame', next ? '1' : '0');
+      return next;
+    });
   };
 
   const go = (s: Screen) => setScreen(s);
@@ -1289,10 +1317,16 @@ export default function EraApp() {
   };
 
   return (
-    <div id="era-app">
+    <div id="era-app" className={mobileFrame ? 'mobile-frame' : ''}>
       <div key={screen} style={{ position: 'absolute', inset: 0 }}>
         {screen === 'landing' && (
-          <LandingScreen mood={mood} onToggleMood={toggleMood} onStart={() => go('intro')} />
+          <LandingScreen
+            mood={mood}
+            onToggleMood={toggleMood}
+            mobileFrame={mobileFrame}
+            onToggleFrame={toggleMobileFrame}
+            onStart={() => go('intro')}
+          />
         )}
         {screen === 'intro' && (
           <IntroScreen onDone={() => go('chat')} />
