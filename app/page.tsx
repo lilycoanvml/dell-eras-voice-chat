@@ -319,10 +319,6 @@ function LandingScreen({ mood, onToggleMood, mobileFrame, onToggleFrame, onStart
 }) {
   return (
     <div className="era-screen">
-      <div className="sticky sticky-1">discover<br />your next<br />chapter ✦</div>
-      <div className="sticky sticky-2">black friday<br />is here</div>
-      <div className="sticky sticky-3">find your<br />era →</div>
-
       <div className="era-topbar">
         <div className="era-brand">
           <strong>Dell Technologies</strong><br />Black Friday 2026
